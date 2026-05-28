@@ -350,12 +350,464 @@ D5	DFN5x6" class="w-full p-3 border border-slate-300 rounded-md font-mono text-s
 
         // 2. 預設資料 (僅需前五碼的選單)
         const DEFAULT_OPTIONS = {
-            'company': [{ value: 'GS', label: 'GS - 預設公司' }, { value: 'NX', label: 'NX - 預設公司' }],
-            'package': [{ value: 'D5', label: 'DFN5x6' }, { value: 'D3', label: 'DFN3x3' }, { value: 'T2', label: 'TO-252' }],
-            'process': [{ value: 'T', label: 'T - Trench' }, { value: 'S', label: 'S - SGT' }, { value: 'P', label: 'P - Planar' }],
-            'voltage': [{ value: '03', label: '03 - 30V' }, { value: '06', label: '06 - 60V' }],
-            'polarity': [{ value: 'N', label: 'N - N-Channel' }, { value: 'P', label: 'P - P-Channel' }]
-        };
+            'options': {
+    'company': [
+      {
+        'value': 'AZ',
+        'label': 'AZ - 固定碼'
+      }
+    ],
+    'package': [
+      {
+        'value': 'H',
+        'label': 'TO-252'
+      },
+      {
+        'value': 'H4',
+        'label': 'TO-252-4'
+      },
+      {
+        'value': 'H5',
+        'label': 'TO-252-5'
+      },
+      {
+        'value': 'F',
+        'label': 'TO-220F-2L'
+      },
+      {
+        'value': 'F3',
+        'label': 'TO-220F'
+      },
+      {
+        'value': 'FT',
+        'label': 'TO-220FT'
+      },
+      {
+        'value': 'FI',
+        'label': 'TO-220 Isolated'
+      },
+      {
+        'value': 'I',
+        'label': 'TO-220'
+      },
+      {
+        'value': 'I2',
+        'label': 'TO-220-2L'
+      },
+      {
+        'value': 'G',
+        'label': 'PDFN5x6 (punch type)'
+      },
+      {
+        'value': 'GC',
+        'label': 'PDFN5x6(Clip)'
+      },
+      {
+        'value': 'GA',
+        'label': 'PDFN5x6-DLR'
+      },
+      {
+        'value': 'GB',
+        'label': 'PDFN5x6-FDUD (flip chip)'
+      },
+      {
+        'value': 'GD',
+        'label': 'PDFN5x6-DUD'
+      },
+      {
+        'value': 'GX',
+        'label': 'PDFN5x6X'
+      },
+      {
+        'value': 'GH',
+        'label': 'PDFN5x6-DSC'
+      },
+      {
+        'value': 'GE',
+        'label': 'PDFN5x6-FL(Source Fuse)'
+      },
+      {
+        'value': 'Q',
+        'label': 'PQFN5x6 (saw type)'
+      },
+      {
+        'value': 'QC',
+        'label': 'PQFN5x6(Clip)'
+      },
+      {
+        'value': 'QA',
+        'label': 'PQFN5x6(預留)'
+      },
+      {
+        'value': 'QB',
+        'label': 'PQFN5x6-FDUD-A(flip chip)'
+      },
+      {
+        'value': 'QD',
+        'label': 'PQFN5x6-FDUD-B(flip chip)'
+      },
+      {
+        'value': 'QE',
+        'label': 'PQFN5x6-FL(Source Fuse)'
+      },
+      {
+        'value': 'QM',
+        'label': 'PDFN8x8 (Saw type)'
+      },
+      {
+        'value': 'QF',
+        'label': 'PQFN8x8_HV(MOSFET)'
+      },
+      {
+        'value': 'QH',
+        'label': 'PQFN5x6-DSC'
+      },
+      {
+        'value': 'D',
+        'label': 'PDFN3x3(Punch type)'
+      },
+      {
+        'value': 'DC',
+        'label': 'PDFN3x3(Clip)'
+      },
+      {
+        'value': 'DA',
+        'label': 'PDFN3x3-DLR'
+      },
+      {
+        'value': 'DB',
+        'label': 'PDFN3x3-DDP *共D'
+      },
+      {
+        'value': 'U',
+        'label': 'PQFN3333 (Saw type)'
+      },
+      {
+        'value': 'UC',
+        'label': 'PQFN3333(Clip)'
+      },
+      {
+        'value': 'U2',
+        'label': 'PQFN2x2-6L'
+      },
+      {
+        'value': 'U3',
+        'label': 'PQFN3x3'
+      },
+      {
+        'value': 'UA',
+        'label': '保留'
+      },
+      {
+        'value': 'UB',
+        'label': 'DFN1006-3L'
+      },
+      {
+        'value': 'UE',
+        'label': 'DFN2*3'
+      },
+      {
+        'value': 'UF',
+        'label': 'PQFN3333A-DSC *(9pin)'
+      },
+      {
+        'value': 'UG',
+        'label': 'PQFN3333A *(9PIN)'
+      },
+      {
+        'value': 'UH',
+        'label': 'PQFN3333B-DSC'
+      },
+      {
+        'value': 'UI',
+        'label': 'PQFN3333B'
+      },
+      {
+        'value': 'N',
+        'label': 'SOT23S'
+      },
+      {
+        'value': 'NX',
+        'label': 'SOT-23X (與BU1 SOT-23區別)'
+      },
+      {
+        'value': 'N6',
+        'label': 'SOT-26'
+      },
+      {
+        'value': 'N8',
+        'label': 'J2928'
+      },
+      {
+        'value': 'NA',
+        'label': 'SOT-323'
+      },
+      {
+        'value': 'NB',
+        'label': 'SOT-363'
+      },
+      {
+        'value': 'NC',
+        'label': 'SOT-523'
+      },
+      {
+        'value': 'ND',
+        'label': 'SOT-723'
+      },
+      {
+        'value': 'NE',
+        'label': 'SOT-563'
+      },
+      {
+        'value': 'NF',
+        'label': 'TSOT-26 *高度較低'
+      },
+      {
+        'value': 'S',
+        'label': 'TO-263'
+      },
+      {
+        'value': 'S7',
+        'label': 'TO-263-7'
+      },
+      {
+        'value': 'S6',
+        'label': 'TO-263-6L'
+      },
+      {
+        'value': 'T',
+        'label': 'TOLL'
+      },
+      {
+        'value': 'TC',
+        'label': 'TOLL(Clip)'
+      },
+      {
+        'value': 'TS',
+        'label': 'sTOLL'
+      },
+      {
+        'value': 'TH',
+        'label': 'TOLL_HV'
+      },
+      {
+        'value': 'TL',
+        'label': 'TOLT'
+      },
+      {
+        'value': 'TG',
+        'label': 'TOLG'
+      },
+      {
+        'value': 'TQ',
+        'label': 'QDPAK'
+      },
+      {
+        'value': 'J',
+        'label': 'TO-251'
+      },
+      {
+        'value': 'JB',
+        'label': 'TO-251S'
+      },
+      {
+        'value': 'V',
+        'label': 'TO-247'
+      },
+      {
+        'value': 'V2',
+        'label': 'TO-247-2L'
+      },
+      {
+        'value': 'V4',
+        'label': 'TO-247-4L'
+      },
+      {
+        'value': 'E',
+        'label': 'SOT-223'
+      },
+      {
+        'value': 'E2',
+        'label': 'SOT-223-2(HV)'
+      },
+      {
+        'value': 'M',
+        'label': 'SO-8'
+      },
+      {
+        'value': 'P',
+        'label': 'LFPAK5x6'
+      },
+      {
+        'value': 'PA',
+        'label': 'LFPAK5x6-DLR'
+      },
+      {
+        'value': 'PB',
+        'label': 'LFPAK3x3'
+      },
+      {
+        'value': 'PD',
+        'label': 'LFPAK8x8'
+      },
+      {
+        'value': 'K',
+        'label': 'SOT-89'
+      },
+      {
+        'value': 'L',
+        'label': 'TSSOP8'
+      }
+    ],
+    'process': [
+      {
+        'value': 'T',
+        'label': 'T - Trench'
+      },
+      {
+        'value': 'G',
+        'label': 'G - SGT'
+      },
+      {
+        'value': 'S',
+        'label': 'S - SJ'
+      },
+      {
+        'value': 'P',
+        'label': 'P - Planar'
+      },
+      {
+        'value': 'C',
+        'label': 'C - Clip Process(包含Full Clip 與Wire+Clip)'
+      }
+    ],
+    'voltage': [
+      {
+        'value': '01',
+        'label': '01 - 20V以下'
+      },
+      {
+        'value': '02',
+        'label': '02 - 20V or 25V'
+      },
+      {
+        'value': '03',
+        'label': '03 - 30V or 35V'
+      },
+      {
+        'value': '06',
+        'label': '06 - 60V or 65V'
+      },
+      {
+        'value': '08',
+        'label': '08 - 80V or 80~89V'
+      },
+      {
+        'value': '10',
+        'label': '10 - 100 ~109V'
+      },
+      {
+        'value': '12',
+        'label': '12 - 120V~'
+      },
+      {
+        'value': '15',
+        'label': '15 - 150V~'
+      },
+      {
+        'value': '20',
+        'label': '20 - 200V'
+      },
+      {
+        'value': '25',
+        'label': '25 - 250V'
+      },
+      {
+        'value': '30',
+        'label': '30 - 300V'
+      },
+      {
+        'value': '50',
+        'label': '50 - 500V'
+      },
+      {
+        'value': '60',
+        'label': '60 - 600V'
+      },
+      {
+        'value': '65',
+        'label': '65 - 650V'
+      },
+      {
+        'value': '70',
+        'label': '70 - 700V'
+      },
+      {
+        'value': '80',
+        'label': '80 - 800V'
+      },
+      {
+        'value': '90',
+        'label': '90 - 900V'
+      },
+      {
+        'value': '100',
+        'label': '100 - 1000V'
+      }
+    ],
+    'polarity': [
+      {
+        'value': 'N',
+        'label': 'N - N-Channel'
+      },
+      {
+        'value': 'P',
+        'label': 'P - P-Channel'
+      },
+      {
+        'value': 'D',
+        'label': 'D - Dual N-CH'
+      },
+      {
+        'value': 'B',
+        'label': 'B - Dual P-CH'
+      },
+      {
+        'value': 'C',
+        'label': 'C - N+P'
+      },
+      {
+        'value': 'G',
+        'label': 'G - N1+N2'
+      }
+    ],
+    'resistance': [
+      {
+        'value': 'A45',
+        'label': 'A45 - 0.45mR'
+      },
+      {
+        'value': 'A75',
+        'label': 'A75 - 0.75mR'
+      },
+      {
+        'value': 'A85',
+        'label': 'A85 - 0.85mR'
+      },
+      {
+        'value': '1R0',
+        'label': '1R0 - 1mR'
+      }
+    ],
+    'opt1': [
+      {
+        'value': 'A',
+        'label': 'A - 車規'
+      }
+    ],
+    'opt2': [],
+    'opt3': []
+          };
 
         const DEFAULT_NOTES = {
             'package': "💡 封裝碼選單會顯示完整名稱，但產出料號時會自動轉換為簡碼。",
