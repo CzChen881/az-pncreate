@@ -324,4 +324,380 @@
             if (savedNotes) {
                 notesData = JSON.parse(savedNotes);
             } else {
-                notesData
+                notesData = JSON.parse(JSON.stringify(DEFAULT_NOTES));
+            }
+
+            // 確保「所有欄位」都有陣列，以便供 datalist 使用
+            FIELDS.forEach(f => {
+                if(!optionsData[f.id]) optionsData[f.id] = [];
+            });
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('pnMobileOptions_v4', JSON.stringify(optionsData));
+            localStorage.setItem('pnMobileNotes_v4', JSON.stringify(notesData));
+        }
+
+        function initSelections() {
+            FIELDS.forEach(f => { selectionsData[f.id] = ''; });
+        }
+
+        // ================= TAB 1: 產生器邏輯 =================
+
+        function renderGeneratorFields() {
+            const container = document.getElementById('fields-container');
+            let html = '';
+            
+            FIELDS.forEach(f => {
+                const note = notesData[f.id];
+                let inputControlHtml = '';
+
+                // 根據 type 決定要畫 <select> 還是 <input>
+                if (f.type === 'select') {
+                    const opts = optionsData[f.id] || [];
+                    let optionsHtml = '<option value="">請選擇...</option>';
+                    opts.forEach(o => {
+                        const selected = selectionsData[f.id] === o.value ? 'selected' : '';
+                        optionsHtml += `<option value="${o.value}" ${selected}>${o.label}</option>`;
+                    });
+
+                    inputControlHtml = `
+                        <select onchange="handleUpdate('${f.id}', this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
+                            ${optionsHtml}
+                        </select>
+                        <div class="text-right mt-2 flex justify-end">
+                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb('${f.id}')">擴充選單與備註 &rarr;</span>
+                        </div>
+                    `;
+                } else {
+                    // 輸入框模式 (加入 datalist 智慧提示功能)
+                    const val = selectionsData[f.id] || '';
+                    const datalistId = `dl-${f.id}`;
+                    
+                    let dlHtml = `<datalist id="${datalistId}">`;
+                    (optionsData[f.id] || []).forEach(o => {
+                        dlHtml += `<option value="${o.value}">${o.label}</option>`;
+                    });
+                    dlHtml += `</datalist>`;
+
+                    inputControlHtml = `
+                        <input list="${datalistId}" type="text" value="${val}" oninput="handleUpdate('${f.id}', this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))" placeholder="${f.placeholder || ''}" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
+                        ${dlHtml}
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-xs text-slate-400 tracking-wide">可自由輸入或選提示</span>
+                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb('${f.id}')">修改備註/提示 &rarr;</span>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
+                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
+                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">${f.label.charAt(0)}</span>
+                            <span class="truncate">${f.label.substring(2)}</span>
+                        </label>
+                        ${note ? `<div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">${note}</div>` : ''}
+                        <div class="mt-auto pt-1">
+                            ${inputControlHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // 統一更新狀態
+        function handleUpdate(fieldId, value) {
+            selectionsData[fieldId] = value;
+            updateCodeDisplay();
+        }
+
+        function updateCodeDisplay() {
+            let codeParts = [];
+            FIELDS.forEach(f => {
+                if (selectionsData[f.id]) {
+                    codeParts.push(selectionsData[f.id]);
+                }
+            });
+            const code = codeParts.join(''); 
+            const displayObj = document.getElementById('display-code');
+            
+            if (code) {
+                displayObj.innerText = code;
+                displayObj.classList.remove('text-slate-400');
+                displayObj.classList.add('text-indigo-600');
+            } else {
+                displayObj.innerText = '請開始輸入規格...';
+                displayObj.classList.add('text-slate-400');
+                displayObj.classList.remove('text-indigo-600');
+            }
+        }
+
+        function clearSelections() {
+            initSelections();
+            renderGeneratorFields();
+            updateCodeDisplay();
+        }
+
+        function copyCode() {
+            const code = document.getElementById('display-code').innerText;
+            if(code === '請開始輸入規格...' || !code) {
+                alert('請先選擇或輸入料號條件！');
+                return;
+            }
+            navigator.clipboard.writeText(code).then(() => {
+                const btnText = document.getElementById('copy-text');
+                btnText.innerText = '已複製';
+                setTimeout(() => { btnText.innerText = '複製'; }, 2000);
+            });
+        }
+
+        function jumpToDb(fieldId) {
+            switchTab('database');
+            document.getElementById('db-field-select').value = fieldId;
+            loadDbField();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= TAB 2: 資料庫邏輯 =================
+
+        function initDatabaseTab() {
+            const selectObj = document.getElementById('db-field-select');
+            let html = '';
+            // 開放所有欄位皆可於設定區被編輯
+            FIELDS.forEach(f => {
+                html += `<option value="${f.id}">${f.label}</option>`;
+            });
+            selectObj.innerHTML = html;
+            loadDbField();
+        }
+
+        function loadDbField() {
+            const fieldId = document.getElementById('db-field-select').value;
+            const titleObj = document.getElementById('db-list-title');
+            const fieldConfig = FIELDS.find(f => f.id === fieldId);
+            
+            // 載入該欄位備註
+            document.getElementById('db-note-input').value = notesData[fieldId] || '';
+            
+            const editorDiv = document.getElementById('db-options-editor');
+            const listDiv = document.getElementById('db-list-container');
+            const hintDiv = document.getElementById('db-input-hint');
+
+            // 確保選項編輯器與清單均顯示
+            editorDiv.classList.remove('hidden');
+            listDiv.classList.remove('hidden');
+
+            // 針對 input 欄位，給予不同的提示語
+            if (fieldConfig.type === 'input') {
+                hintDiv.classList.remove('hidden');
+                hintDiv.innerHTML = `<div class="flex items-start gap-2 justify-center"><svg class="shrink-0 mt-0.5" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 此為自由輸入欄位。<br>您在此新增的選項，將在輸入時作為<b>「智慧提示清單 (自動完成)」</b>出現。</div>`;
+            } else {
+                hintDiv.classList.add('hidden');
+            }
+            
+            titleObj.innerText = `${fieldConfig.label} - 選項`;
+            renderDbOptionsList(fieldId);
+        }
+
+        function renderDbOptionsList(fieldId) {
+            const listObj = document.getElementById('db-options-list');
+            const countObj = document.getElementById('db-list-count');
+            const opts = optionsData[fieldId] || [];
+            
+            countObj.innerText = `${opts.length} 筆`;
+
+            if (opts.length === 0) {
+                listObj.innerHTML = `<div class="text-center text-slate-400 mt-10 text-sm">此欄位尚未建立資料。</div>`;
+                return;
+            }
+
+            let html = '<ul class="space-y-2">';
+            opts.forEach((o, idx) => {
+                const displayLabel = fieldId === 'package' ? o.label : (o.label.split(' - ')[1] || o.label);
+                html += `
+                    <li class="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-lg shadow-sm">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <span class="font-mono bg-indigo-50 text-indigo-700 px-3 py-1 rounded font-bold border border-indigo-100 min-w-[50px] text-center text-sm shrink-0">${o.value}</span>
+                            <span class="text-slate-700 font-medium text-sm truncate">${displayLabel}</span>
+                        </div>
+                        <button onclick="removeOption('${fieldId}', ${idx})" class="text-slate-300 hover:text-red-500 transition-colors p-3 -mr-2" title="刪除">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                        </button>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            listObj.innerHTML = html;
+        }
+
+        function saveNote() {
+            const fieldId = document.getElementById('db-field-select').value;
+            notesData[fieldId] = document.getElementById('db-note-input').value;
+            saveToStorage();
+            renderGeneratorFields(); 
+        }
+
+        function addSingleOption() {
+            const fieldId = document.getElementById('db-field-select').value;
+            let val = document.getElementById('db-val-input').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+            let lbl = document.getElementById('db-lbl-input').value.trim();
+
+            if (!val) {
+                showAlert('代碼值為必填且只能為英數字！', false); return;
+            }
+
+            const finalLabel = lbl ? (fieldId === 'package' ? lbl : `${val} - ${lbl}`) : val;
+            optionsData[fieldId].push({ value: val, label: finalLabel });
+            
+            finishAdding(fieldId, '新增成功！');
+            document.getElementById('db-val-input').value = '';
+            document.getElementById('db-lbl-input').value = '';
+        }
+
+        function addBatchOptions() {
+            const fieldId = document.getElementById('db-field-select').value;
+            const text = document.getElementById('db-batch-input').value.trim();
+            if (!text) {
+                showAlert('請先貼上資料！', false); return;
+            }
+
+            const lines = text.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                let parts = line.split('\t');
+                if (parts.length < 2) parts = line.split(',');
+
+                if (parts.length >= 2) {
+                    let val = parts[0].trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                    let lbl = parts[1].trim();
+                    if (val && lbl) {
+                        optionsData[fieldId].push({ value: val, label: fieldId === 'package' ? lbl : `${val} - ${lbl}` });
+                        addedCount++;
+                    }
+                } else {
+                    let val = line.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                    if(val) {
+                        optionsData[fieldId].push({ value: val, label: val });
+                        addedCount++;
+                    }
+                }
+            });
+
+            if(addedCount > 0) {
+                finishAdding(fieldId, `成功匯入 ${addedCount} 筆資料！`);
+                document.getElementById('db-batch-input').value = '';
+            } else {
+                showAlert('無法識別有效資料，請檢查格式。', false);
+            }
+        }
+
+        function removeOption(fieldId, index) {
+            optionsData[fieldId].splice(index, 1);
+            finishAdding(fieldId, '已刪除該選項。');
+        }
+
+        function finishAdding(fieldId, msg) {
+            saveToStorage();
+            renderDbOptionsList(fieldId);
+            renderGeneratorFields(); 
+            showAlert(msg, true);
+        }
+
+        // ================= UI 輔助功能 =================
+
+        function switchTab(tab) {
+            const genTab = document.getElementById('tab-generator');
+            const dbTab = document.getElementById('tab-database');
+            const genBtn = document.getElementById('btn-generator');
+            const dbBtn = document.getElementById('btn-database');
+            const stickyFooter = document.getElementById('sticky-footer');
+
+            if (tab === 'generator') {
+                genTab.classList.remove('hidden');
+                dbTab.classList.add('hidden');
+                genBtn.classList.add('active', 'bg-white', 'text-indigo-600');
+                genBtn.classList.remove('bg-indigo-700', 'text-indigo-100');
+                dbBtn.classList.remove('active', 'bg-white', 'text-indigo-600');
+                dbBtn.classList.add('bg-indigo-700', 'text-indigo-100');
+                
+                stickyFooter.classList.remove('translate-y-full');
+            } else {
+                dbTab.classList.remove('hidden');
+                genTab.classList.add('hidden');
+                dbBtn.classList.add('active', 'bg-white', 'text-indigo-600');
+                dbBtn.classList.remove('bg-indigo-700', 'text-indigo-100');
+                genBtn.classList.remove('active', 'bg-white', 'text-indigo-600');
+                genBtn.classList.add('bg-indigo-700', 'text-indigo-100');
+                
+                stickyFooter.classList.add('translate-y-full');
+            }
+        }
+
+        function setAddMode(mode) {
+            const sDiv = document.getElementById('mode-single');
+            const bDiv = document.getElementById('mode-batch');
+            const sBtn = document.getElementById('btn-mode-single');
+            const bBtn = document.getElementById('btn-mode-batch');
+
+            if (mode === 'single') {
+                sDiv.classList.remove('hidden'); bDiv.classList.add('hidden');
+                sBtn.className = "flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold";
+                bBtn.className = "flex-1 py-2 text-sm rounded-md text-slate-500";
+            } else {
+                bDiv.classList.remove('hidden'); sDiv.classList.add('hidden');
+                bBtn.className = "flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold";
+                sBtn.className = "flex-1 py-2 text-sm rounded-md text-slate-500";
+            }
+        }
+
+        function showAlert(msg, isSuccess) {
+            const box = document.getElementById('alert-box');
+            box.innerText = msg;
+            box.className = `mb-4 p-3 rounded-lg text-sm font-medium ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200'}`;
+            box.classList.remove('hidden');
+            setTimeout(() => { box.classList.add('hidden'); }, 3000);
+        }
+
+        // ================= 備份還原功能 =================
+        
+        function exportData() {
+            const dataStr = JSON.stringify({ options: optionsData, notes: notesData }, null, 2);
+            const blob = new Blob([dataStr], {type: "application/json"});
+            const url  = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `pn_generator_mobile_backup_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+            showAlert('資料庫已成功匯出！', true);
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if(data.options) {
+                        optionsData = data.options;
+                        notesData = data.notes || {};
+                        saveToStorage();
+                        initSelections();
+                        renderGeneratorFields();
+                        loadDbField();
+                        showAlert('資料庫還原成功！', true);
+                    } else {
+                        showAlert('檔案格式不正確', false);
+                    }
+                } catch(err) {
+                    showAlert('無法讀取檔案', false);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+    </script>
+</body>
+</html>
