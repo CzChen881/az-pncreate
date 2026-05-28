@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>海馳BU2產品命名選擇程式 - 手機優化版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .tab-btn.active { background-color: white; color: #4f46e5; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .tab-btn { background-color: #4338ca; color: #e0e7ff; }
+        .tab-btn:hover:not(.active) { background-color: #6366f1; }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        input[type="file"] { display: none; }
+        /* 避免 iOS Safari 底部安全區域遮擋 */
+        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-32">
+
+    <div class="max-w-6xl mx-auto bg-white sm:rounded-2xl sm:shadow-xl overflow-hidden sm:mt-4 sm:mb-8">
+        
+        <div class="bg-indigo-600 p-4 sm:p-6 text-white">
+            <h1 class="text-xl sm:text-2xl font-bold flex items-center gap-2 mb-1">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                海馳BU2產品命名選擇程式
+            </h1>
+            <p class="text-indigo-200 text-xs sm:text-sm mb-4">手機友善混合組成系統 (支援全欄位備註)</p>
+            
+            <div class="flex gap-2 w-full">
+                <button onclick="switchTab('generator')" id="btn-generator" class="tab-btn active flex-1 py-2.5 rounded-lg font-bold text-sm sm:text-base transition-all text-center">
+                    料號產生器
+                </button>
+                <button onclick="switchTab('database')" id="btn-database" class="tab-btn flex-1 py-2.5 rounded-lg font-bold text-sm sm:text-base transition-all text-center">
+                    資料庫設定
+                </button>
+            </div>
+        </div>
+
+        <div class="p-4 sm:p-6">
+            <div id="tab-generator" class="fade-in pb-12">
+                <div id="fields-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                    </div>
+            </div>
+
+            <div id="tab-database" class="hidden fade-in">
+                
+                <div class="mb-4 grid grid-cols-1 gap-4">
+                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3">
+                        <div class="text-xs sm:text-sm text-blue-800">
+                            <p class="font-bold mb-1">操作說明：</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>您可以在此為**所有欄位**設定「填寫說明(備註)」，提示同事輸入規則。</li>
+                                <li>封裝碼支援防呆：組合料號時會自動輸出「代碼值(簡碼)」。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-3 bg-slate-100 border border-slate-200 rounded-lg">
+                        <p class="text-xs sm:text-sm font-bold text-slate-700 mb-2">參數清單備份與還原</p>
+                        <div class="flex gap-2">
+                            <button onclick="exportData()" class="flex-1 bg-white border border-slate-300 py-2 rounded text-sm font-medium hover:bg-slate-50">匯出備份</button>
+                            <button onclick="document.getElementById('file-import').click()" class="flex-1 bg-white border border-slate-300 py-2 rounded text-sm font-medium hover:bg-slate-50">匯入還原</button>
+                            <input type="file" id="file-import" accept=".json" onchange="importData(event)">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="alert-box" class="hidden mb-4 p-3 rounded-lg text-sm font-medium"></div>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <div class="w-full md:w-1/3 space-y-4">
+                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-slate-600 mb-1">1. 選擇目標欄位</label>
+                                <select id="db-field-select" onchange="loadDbField()" class="w-full p-3 border border-slate-300 rounded-md bg-slate-50 font-bold text-indigo-600 text-base">
+                                    </select>
+                            </div>
+
+                            <div class="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <label class="block text-sm font-bold text-yellow-800 mb-1">填寫說明 (備註)</label>
+                                <textarea id="db-note-input" oninput="saveNote()" class="w-full p-2 border border-yellow-300 rounded text-sm outline-none focus:ring-2 focus:ring-yellow-400" placeholder="輸入備註 (自動儲存)..." rows="2"></textarea>
+                            </div>
+
+                            <div id="db-input-hint" class="hidden p-4 bg-slate-50 text-slate-500 rounded-lg text-sm text-center border border-slate-200">
+                                <svg class="w-8 h-8 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                此為自由輸入欄位，無需設定下拉選項。<br>您可於上方編輯「填寫說明」即可。
+                            </div>
+
+                            <div id="db-options-editor">
+                                <div class="flex bg-slate-100 p-1 rounded-lg mb-4">
+                                    <button onclick="setAddMode('single')" id="btn-mode-single" class="flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold">單筆輸入</button>
+                                    <button onclick="setAddMode('batch')" id="btn-mode-batch" class="flex-1 py-2 text-sm rounded-md text-slate-500">Excel 匯入</button>
+                                </div>
+
+                                <div id="mode-single" class="space-y-3">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 mb-1">代碼值 (產出於料號)</label>
+                                        <input type="text" id="db-val-input" placeholder="輸入代號" class="w-full p-3 border border-slate-300 rounded-md font-mono uppercase text-base">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 mb-1">選項說明 (顯示於選單)</label>
+                                        <input type="text" id="db-lbl-input" placeholder="說明文字..." class="w-full p-3 border border-slate-300 rounded-md text-base">
+                                    </div>
+                                    <button onclick="addSingleOption()" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition mt-2 font-bold text-base">新增選項</button>
+                                </div>
+
+                                <div id="mode-batch" class="space-y-3 hidden">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-600 mb-1">貼上 Excel 資料 (兩欄)</label>
+                                        <textarea id="db-batch-input" rows="5" placeholder="左欄代碼&#9;右欄說明&#10;D5&#9;DFN5x6" class="w-full p-3 border border-slate-300 rounded-md font-mono text-sm leading-relaxed"></textarea>
+                                    </div>
+                                    <button onclick="addBatchOptions()" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition mt-2 font-bold text-base">開始解析匯入</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="w-full md:w-2/3" id="db-list-container">
+                        <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col h-full min-h-[300px]">
+                            <div class="p-3 bg-slate-50 border-b border-slate-200 font-bold text-slate-700 flex justify-between items-center">
+                                <span id="db-list-title" class="text-sm">目前選項</span>
+                                <span id="db-list-count" class="text-xs font-normal text-slate-500 bg-white px-2 py-1 rounded border">0 筆</span>
+                            </div>
+                            <div class="flex-1 overflow-y-auto p-2" id="db-options-list">
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sticky-footer" class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] p-4 pb-safe z-50 transition-transform duration-300 transform translate-y-0">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center gap-3">
+            <div class="flex-1 w-full text-center sm:text-left overflow-hidden">
+                <div class="text-[10px] text-slate-400 font-medium uppercase mb-0.5">預覽料號</div>
+                <div id="display-code" class="text-2xl sm:text-3xl font-mono font-bold tracking-wider text-slate-400 break-all truncate">
+                    請開始輸入規格...
+                </div>
+            </div>
+            <div class="flex w-full sm:w-auto gap-2">
+                <button onclick="clearSelections()" class="px-4 py-3 bg-slate-100 border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-200 font-bold text-sm shrink-0">
+                    清除
+                </button>
+                <button onclick="copyCode()" class="flex-1 sm:px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-bold text-sm shadow-md flex justify-center items-center gap-2 active:scale-95 transition-transform">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                    <span id="copy-text">複製</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. 欄位定義 (9 個欄位)：區分 type 為 select 或 input
+        const FIELDS = [
+            { id: 'company', label: '1. 公司碼', type: 'select' },
+            { id: 'package', label: '2. 封裝碼', type: 'select' },
+            { id: 'process', label: '3. 製程碼', type: 'select' },
+            { id: 'voltage', label: '4. 電壓碼', type: 'select' },
+            { id: 'polarity', label: '5. 極性碼', type: 'select' },
+            { id: 'resistance', label: '6. 電阻碼', type: 'input', placeholder: '如 045 或 4R7' },
+            { id: 'opt1', label: '7. 選用碼 1', type: 'input', placeholder: '無則留空' },
+            { id: 'opt2', label: '8. 選用碼 2', type: 'input', placeholder: '無則留空' },
+            { id: 'opt3', label: '9. 選用碼 3', type: 'input', placeholder: '無則留空' },
+        ];
+
+        // 2. 預設資料 (僅需前五碼的選單)
+        const DEFAULT_OPTIONS = {
+            'company': [{ value: 'GS', label: 'GS - 預設公司' }, { value: 'NX', label: 'NX - 預設公司' }],
+            'package': [{ value: 'D5', label: 'DFN5x6' }, { value: 'D3', label: 'DFN3x3' }, { value: 'T2', label: 'TO-252' }],
+            'process': [{ value: 'T', label: 'T - Trench' }, { value: 'S', label: 'S - SGT' }, { value: 'P', label: 'P - Planar' }],
+            'voltage': [{ value: '03', label: '03 - 30V' }, { value: '06', label: '06 - 60V' }],
+            'polarity': [{ value: 'N', label: 'N - N-Channel' }, { value: 'P', label: 'P - P-Channel' }]
+        };
+
+        const DEFAULT_NOTES = {
+            'package': "💡 封裝碼選單會顯示完整名稱，但產出料號時會自動轉換為簡碼。",
+            'resistance': "💡 建議格式：整數用3碼 (如 045)，含小數點用 R (如 4R7)"
+        };
+
+        // 全域狀態
+        let optionsData = {};
+        let notesData = {};
+        let selectionsData = {};
+
+        // 3. 初始化
+        window.onload = function() {
+            loadFromStorage();
+            initSelections();
+            renderGeneratorFields();
+            initDatabaseTab();
+            updateCodeDisplay();
+        };
+
+        function loadFromStorage() {
+            const savedOptions = localStorage.getItem('pnMobileOptions_v3');
+            const savedNotes = localStorage.getItem('pnMobileNotes_v3');
+            
+            if (savedOptions) {
+                optionsData = JSON.parse(savedOptions);
+            } else {
+                optionsData = JSON.parse(JSON.stringify(DEFAULT_OPTIONS));
+            }
+
+            if (savedNotes) {
+                notesData = JSON.parse(savedNotes);
+            } else {
+                notesData = JSON.parse(JSON.stringify(DEFAULT_NOTES));
+            }
+
+            FIELDS.filter(f => f.type === 'select').forEach(f => {
+                if(!optionsData[f.id]) optionsData[f.id] = [];
+            });
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('pnMobileOptions_v3', JSON.stringify(optionsData));
+            localStorage.setItem('pnMobileNotes_v3', JSON.stringify(notesData));
+        }
+
+        function initSelections() {
+            FIELDS.forEach(f => { selectionsData[f.id] = ''; });
+        }
+
+        // ================= TAB 1: 產生器邏輯 =================
+
+        function renderGeneratorFields() {
+            const container = document.getElementById('fields-container');
+            let html = '';
+            
+            FIELDS.forEach(f => {
+                const note = notesData[f.id];
+                let inputControlHtml = '';
+
+                // 根據 type 決定要畫 <select> 還是 <input>
+                if (f.type === 'select') {
+                    const opts = optionsData[f.id] || [];
+                    let optionsHtml = '<option value="">請選擇...</option>';
+                    opts.forEach(o => {
+                        const selected = selectionsData[f.id] === o.value ? 'selected' : '';
+                        optionsHtml += `<option value="${o.value}" ${selected}>${o.label}</option>`;
+                    });
+
+                    inputControlHtml = `
+                        <select onchange="handleUpdate('${f.id}', this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
+                            ${optionsHtml}
+                        </select>
+                        <div class="text-right mt-2 flex justify-end">
+                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb('${f.id}')">擴充選單與備註 &rarr;</span>
+                        </div>
+                    `;
+                } else {
+                    // 輸入框模式
+                    const val = selectionsData[f.id] || '';
+                    inputControlHtml = `
+                        <input type="text" value="${val}" oninput="handleUpdate('${f.id}', this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))" placeholder="${f.placeholder || ''}" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
+                        <div class="flex justify-between items-center mt-2">
+                            <span class="text-xs text-slate-400 tracking-wide">自由輸入 (限英數字)</span>
+                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb('${f.id}')">修改備註 &rarr;</span>
+                        </div>
+                    `;
+                }
+
+                html += `
+                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
+                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
+                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">${f.label.charAt(0)}</span>
+                            <span class="truncate">${f.label.substring(2)}</span>
+                        </label>
+                        ${note ? `<div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">${note}</div>` : ''}
+                        <div class="mt-auto pt-1">
+                            ${inputControlHtml}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // 統一更新狀態
+        function handleUpdate(fieldId, value) {
+            selectionsData[fieldId] = value;
+            updateCodeDisplay();
+        }
+
+        function updateCodeDisplay() {
+            let codeParts = [];
+            FIELDS.forEach(f => {
+                if (selectionsData[f.id]) {
+                    codeParts.push(selectionsData[f.id]);
+                }
+            });
+            const code = codeParts.join(''); 
+            const displayObj = document.getElementById('display-code');
+            
+            if (code) {
+                displayObj.innerText = code;
+                displayObj.classList.remove('text-slate-400');
+                displayObj.classList.add('text-indigo-600');
+            } else {
+                displayObj.innerText = '請開始輸入規格...';
+                displayObj.classList.add('text-slate-400');
+                displayObj.classList.remove('text-indigo-600');
+            }
+        }
+
+        function clearSelections() {
+            initSelections();
+            renderGeneratorFields();
+            updateCodeDisplay();
+        }
+
+        function copyCode() {
+            const code = document.getElementById('display-code').innerText;
+            if(code === '請開始輸入規格...' || !code) {
+                alert('請先選擇或輸入料號條件！');
+                return;
+            }
+            navigator.clipboard.writeText(code).then(() => {
+                const btnText = document.getElementById('copy-text');
+                btnText.innerText = '已複製';
+                setTimeout(() => { btnText.innerText = '複製'; }, 2000);
+            });
+        }
+
+        function jumpToDb(fieldId) {
+            switchTab('database');
+            document.getElementById('db-field-select').value = fieldId;
+            loadDbField();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================= TAB 2: 資料庫邏輯 =================
+
+        function initDatabaseTab() {
+            const selectObj = document.getElementById('db-field-select');
+            let html = '';
+            // 放出「所有欄位」讓使用者都可以改備註
+            FIELDS.forEach(f => {
+                html += `<option value="${f.id}">${f.label}</option>`;
+            });
+            selectObj.innerHTML = html;
+            loadDbField();
+        }
+
+        function loadDbField() {
+            const fieldId = document.getElementById('db-field-select').value;
+            const titleObj = document.getElementById('db-list-title');
+            const fieldConfig = FIELDS.find(f => f.id === fieldId);
+            
+            // 載入該欄位備註
+            document.getElementById('db-note-input').value = notesData[fieldId] || '';
+            
+            const editorDiv = document.getElementById('db-options-editor');
+            const listDiv = document.getElementById('db-list-container');
+            const hintDiv = document.getElementById('db-input-hint');
+
+            if (fieldConfig.type === 'input') {
+                // 若為自由輸入，隱藏清單與選項編輯器，顯示提示
+                editorDiv.classList.add('hidden');
+                listDiv.classList.add('hidden');
+                hintDiv.classList.remove('hidden');
+            } else {
+                // 若為下拉選單，正常顯示
+                editorDiv.classList.remove('hidden');
+                listDiv.classList.remove('hidden');
+                hintDiv.classList.add('hidden');
+                
+                titleObj.innerText = `${fieldConfig.label} - 選項`;
+                renderDbOptionsList(fieldId);
+            }
+        }
+
+        function renderDbOptionsList(fieldId) {
+            const listObj = document.getElementById('db-options-list');
+            const countObj = document.getElementById('db-list-count');
+            const opts = optionsData[fieldId] || [];
+            
+            countObj.innerText = `${opts.length} 筆`;
+
+            if (opts.length === 0) {
+                listObj.innerHTML = `<div class="text-center text-slate-400 mt-10 text-sm">此欄位尚未建立資料。</div>`;
+                return;
+            }
+
+            let html = '<ul class="space-y-2">';
+            opts.forEach((o, idx) => {
+                const displayLabel = fieldId === 'package' ? o.label : (o.label.split(' - ')[1] || o.label);
+                html += `
+                    <li class="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-lg shadow-sm">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <span class="font-mono bg-indigo-50 text-indigo-700 px-3 py-1 rounded font-bold border border-indigo-100 min-w-[50px] text-center text-sm shrink-0">${o.value}</span>
+                            <span class="text-slate-700 font-medium text-sm truncate">${displayLabel}</span>
+                        </div>
+                        <button onclick="removeOption('${fieldId}', ${idx})" class="text-slate-300 hover:text-red-500 transition-colors p-3 -mr-2" title="刪除">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                        </button>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            listObj.innerHTML = html;
+        }
+
+        function saveNote() {
+            const fieldId = document.getElementById('db-field-select').value;
+            notesData[fieldId] = document.getElementById('db-note-input').value;
+            saveToStorage();
+            renderGeneratorFields(); 
+        }
+
+        function addSingleOption() {
+            const fieldId = document.getElementById('db-field-select').value;
+            let val = document.getElementById('db-val-input').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+            let lbl = document.getElementById('db-lbl-input').value.trim();
+
+            if (!val) {
+                showAlert('代碼值為必填且只能為英數字！', false); return;
+            }
+
+            const finalLabel = lbl ? (fieldId === 'package' ? lbl : `${val} - ${lbl}`) : val;
+            optionsData[fieldId].push({ value: val, label: finalLabel });
+            
+            finishAdding(fieldId, '新增成功！');
+            document.getElementById('db-val-input').value = '';
+            document.getElementById('db-lbl-input').value = '';
+        }
+
+        function addBatchOptions() {
+            const fieldId = document.getElementById('db-field-select').value;
+            const text = document.getElementById('db-batch-input').value.trim();
+            if (!text) {
+                showAlert('請先貼上資料！', false); return;
+            }
+
+            const lines = text.split('\n');
+            let addedCount = 0;
+
+            lines.forEach(line => {
+                let parts = line.split('\t');
+                if (parts.length < 2) parts = line.split(',');
+
+                if (parts.length >= 2) {
+                    let val = parts[0].trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                    let lbl = parts[1].trim();
+                    if (val && lbl) {
+                        optionsData[fieldId].push({ value: val, label: fieldId === 'package' ? lbl : `${val} - ${lbl}` });
+                        addedCount++;
+                    }
+                } else {
+                    let val = line.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                    if(val) {
+                        optionsData[fieldId].push({ value: val, label: val });
+                        addedCount++;
+                    }
+                }
+            });
+
+            if(addedCount > 0) {
+                finishAdding(fieldId, `成功匯入 ${addedCount} 筆資料！`);
+                document.getElementById('db-batch-input').value = '';
+            } else {
+                showAlert('無法識別有效資料，請檢查格式。', false);
+            }
+        }
+
+        function removeOption(fieldId, index) {
+            optionsData[fieldId].splice(index, 1);
+            finishAdding(fieldId, '已刪除該選項。');
+        }
+
+        function finishAdding(fieldId, msg) {
+            saveToStorage();
+            renderDbOptionsList(fieldId);
+            renderGeneratorFields(); 
+            showAlert(msg, true);
+        }
+
+        // ================= UI 輔助功能 =================
+
+        function switchTab(tab) {
+            const genTab = document.getElementById('tab-generator');
+            const dbTab = document.getElementById('tab-database');
+            const genBtn = document.getElementById('btn-generator');
+            const dbBtn = document.getElementById('btn-database');
+            const stickyFooter = document.getElementById('sticky-footer');
+
+            if (tab === 'generator') {
+                genTab.classList.remove('hidden');
+                dbTab.classList.add('hidden');
+                genBtn.classList.add('active', 'bg-white', 'text-indigo-600');
+                genBtn.classList.remove('bg-indigo-700', 'text-indigo-100');
+                dbBtn.classList.remove('active', 'bg-white', 'text-indigo-600');
+                dbBtn.classList.add('bg-indigo-700', 'text-indigo-100');
+                
+                stickyFooter.classList.remove('translate-y-full');
+            } else {
+                dbTab.classList.remove('hidden');
+                genTab.classList.add('hidden');
+                dbBtn.classList.add('active', 'bg-white', 'text-indigo-600');
+                dbBtn.classList.remove('bg-indigo-700', 'text-indigo-100');
+                genBtn.classList.remove('active', 'bg-white', 'text-indigo-600');
+                genBtn.classList.add('bg-indigo-700', 'text-indigo-100');
+                
+                stickyFooter.classList.add('translate-y-full');
+            }
+        }
+
+        function setAddMode(mode) {
+            const sDiv = document.getElementById('mode-single');
+            const bDiv = document.getElementById('mode-batch');
+            const sBtn = document.getElementById('btn-mode-single');
+            const bBtn = document.getElementById('btn-mode-batch');
+
+            if (mode === 'single') {
+                sDiv.classList.remove('hidden'); bDiv.classList.add('hidden');
+                sBtn.className = "flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold";
+                bBtn.className = "flex-1 py-2 text-sm rounded-md text-slate-500";
+            } else {
+                bDiv.classList.remove('hidden'); sDiv.classList.add('hidden');
+                bBtn.className = "flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold";
+                sBtn.className = "flex-1 py-2 text-sm rounded-md text-slate-500";
+            }
+        }
+
+        function showAlert(msg, isSuccess) {
+            const box = document.getElementById('alert-box');
+            box.innerText = msg;
+            box.className = `mb-4 p-3 rounded-lg text-sm font-medium ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200'}`;
+            box.classList.remove('hidden');
+            setTimeout(() => { box.classList.add('hidden'); }, 3000);
+        }
+
+        // ================= 備份還原功能 =================
+        
+        function exportData() {
+            const dataStr = JSON.stringify({ options: optionsData, notes: notesData }, null, 2);
+            const blob = new Blob([dataStr], {type: "application/json"});
+            const url  = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `pn_generator_mobile_backup_${new Date().toISOString().slice(0,10)}.json`;
+            link.click();
+            showAlert('資料庫已成功匯出！', true);
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if(data.options) {
+                        optionsData = data.options;
+                        notesData = data.notes || {};
+                        saveToStorage();
+                        initSelections();
+                        renderGeneratorFields();
+                        loadDbField();
+                        showAlert('資料庫還原成功！', true);
+                    } else {
+                        showAlert('檔案格式不正確', false);
+                    }
+                } catch(err) {
+                    showAlert('無法讀取檔案', false);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+    </script>
+</body>
+</html>
