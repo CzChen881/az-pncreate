@@ -1,1211 +1,593 @@
 <!DOCTYPE html>
-<!-- saved from url=(0031)https://az-pncreate.vercel.app/ -->
-<html lang="zh-TW"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>海馳BU2產品命名選擇程式 - 手機優化版</title>
-    <script src="./index_files/saved_resource"></script>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>16碼編碼生成器 Pro</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .tab-btn.active { background-color: white; color: #4f46e5; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        .tab-btn { background-color: #4338ca; color: #e0e7ff; }
-        .tab-btn:hover:not(.active) { background-color: #6366f1; }
-        .fade-in { animation: fadeIn 0.3s ease-out; }
+        .animate-fade-in { animation: fadeIn 0.3s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        /* 隱藏檔案輸入框 */
         input[type="file"] { display: none; }
-        /* 避免 iOS Safari 底部安全區域遮擋 */
-        .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.bottom-0{bottom:0px}.left-0{left:0px}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-0\.5{margin-bottom:0.125rem}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-4{margin-bottom:1rem}.mt-2{margin-top:0.5rem}.-mr-2{margin-right:-0.5rem}.mt-auto{margin-top:auto}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-8{height:2rem}.h-full{height:100%}.h-6{height:1.5rem}.min-h-screen{min-height:100vh}.min-h-\[300px\]{min-height:300px}.w-8{width:2rem}.w-full{width:100%}.w-6{width:1.5rem}.min-w-\[50px\]{min-width:50px}.max-w-6xl{max-width:72rem}.flex-1{flex:1 1 0%}.shrink-0{flex-shrink:0}.translate-y-0{--tw-translate-y:0px;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.cursor-pointer{cursor:pointer}.list-inside{list-style-position:inside}.list-disc{list-style-type:disc}.appearance-none{-webkit-appearance:none;appearance:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}.truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.break-all{word-break:break-all}.rounded{border-radius:0.25rem}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.rounded-full{border-radius:9999px}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-blue-200{--tw-border-opacity:1;border-color:rgb(191 219 254 / var(--tw-border-opacity, 1))}.border-slate-200{--tw-border-opacity:1;border-color:rgb(226 232 240 / var(--tw-border-opacity, 1))}.border-slate-300{--tw-border-opacity:1;border-color:rgb(203 213 225 / var(--tw-border-opacity, 1))}.border-yellow-200{--tw-border-opacity:1;border-color:rgb(254 240 138 / var(--tw-border-opacity, 1))}.border-yellow-300{--tw-border-opacity:1;border-color:rgb(253 224 71 / var(--tw-border-opacity, 1))}.border-indigo-100{--tw-border-opacity:1;border-color:rgb(224 231 255 / var(--tw-border-opacity, 1))}.border-slate-100{--tw-border-opacity:1;border-color:rgb(241 245 249 / var(--tw-border-opacity, 1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74 / var(--tw-bg-opacity, 1))}.bg-indigo-600{--tw-bg-opacity:1;background-color:rgb(79 70 229 / var(--tw-bg-opacity, 1))}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-50{--tw-bg-opacity:1;background-color:rgb(254 252 232 / var(--tw-bg-opacity, 1))}.bg-indigo-100{--tw-bg-opacity:1;background-color:rgb(224 231 255 / var(--tw-bg-opacity, 1))}.bg-indigo-50{--tw-bg-opacity:1;background-color:rgb(238 242 255 / var(--tw-bg-opacity, 1))}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-4{padding-left:1rem;padding-right:1rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.pb-32{padding-bottom:8rem}.pb-12{padding-bottom:3rem}.pt-1{padding-top:0.25rem}.text-center{text-align:center}.text-right{text-align:right}.font-sans{font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-\[10px\]{font-size:10px}.text-base{font-size:1rem;line-height:1.5rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-normal{font-weight:400}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-wider{letter-spacing:0.05em}.tracking-wide{letter-spacing:0.025em}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59 / var(--tw-text-opacity, 1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.text-indigo-200{--tw-text-opacity:1;color:rgb(199 210 254 / var(--tw-text-opacity, 1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-slate-700{--tw-text-opacity:1;color:rgb(51 65 85 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-yellow-800{--tw-text-opacity:1;color:rgb(133 77 14 / var(--tw-text-opacity, 1))}.text-indigo-500{--tw-text-opacity:1;color:rgb(99 102 241 / var(--tw-text-opacity, 1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202 / var(--tw-text-opacity, 1))}.placeholder-slate-400::placeholder{--tw-placeholder-opacity:1;color:rgb(148 163 184 / var(--tw-placeholder-opacity, 1))}.shadow{--tw-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-\[0_-10px_20px_-5px_rgba\(0\2c 0\2c 0\2c 0\.1\)\]{--tw-shadow:0 -10px 20px -5px rgba(0,0,0,0.1);--tw-shadow-colored:0 -10px 20px -5px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.outline-none{outline:2px solid transparent;outline-offset:2px}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-300{transition-duration:300ms}.hover\:border-indigo-300:hover{--tw-border-opacity:1;border-color:rgb(165 180 252 / var(--tw-border-opacity, 1))}.hover\:bg-green-700:hover{--tw-bg-opacity:1;background-color:rgb(21 128 61 / var(--tw-bg-opacity, 1))}.hover\:bg-indigo-700:hover{--tw-bg-opacity:1;background-color:rgb(67 56 202 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-200:hover{--tw-bg-opacity:1;background-color:rgb(226 232 240 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-50:hover{--tw-bg-opacity:1;background-color:rgb(248 250 252 / var(--tw-bg-opacity, 1))}.hover\:text-red-500:hover{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-yellow-400:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(250 204 21 / var(--tw-ring-opacity, 1))}.focus\:ring-indigo-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(99 102 241 / var(--tw-ring-opacity, 1))}.active\:scale-95:active{--tw-scale-x:.95;--tw-scale-y:.95;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}@media (min-width: 640px){.sm\:mb-8{margin-bottom:2rem}.sm\:mt-4{margin-top:1rem}.sm\:w-auto{width:auto}.sm\:flex-row{flex-direction:row}.sm\:gap-4{gap:1rem}.sm\:rounded-2xl{border-radius:1rem}.sm\:p-6{padding:1.5rem}.sm\:p-3\.5{padding:0.875rem}.sm\:p-4{padding:1rem}.sm\:px-8{padding-left:2rem;padding-right:2rem}.sm\:text-left{text-align:left}.sm\:text-2xl{font-size:1.5rem;line-height:2rem}.sm\:text-3xl{font-size:1.875rem;line-height:2.25rem}.sm\:text-base{font-size:1rem;line-height:1.5rem}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}.sm\:shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}}@media (min-width: 768px){.md\:w-1\/3{width:33.333333%}.md\:w-2\/3{width:66.666667%}.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen pb-32">
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans">
+    <div id="root"></div>
 
-    <div class="max-w-6xl mx-auto bg-white sm:rounded-2xl sm:shadow-xl overflow-hidden sm:mt-4 sm:mb-8">
-        
-        <div class="bg-indigo-600 p-4 sm:p-6 text-white">
-            <h1 class="text-xl sm:text-2xl font-bold flex items-center gap-2 mb-1">
-                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M3 5V19A9 3 0 0 0 21 19V5"></path><path d="M3 12A9 3 0 0 0 21 12"></path></svg>
-                海馳BU2產品命名選擇程式
-            </h1>
-            <p class="text-indigo-200 text-xs sm:text-sm mb-4">手機友善混合組成系統 (支援全欄位備註)</p>
-            
-            <div class="flex gap-2 w-full">
-                <button onclick="switchTab(&#39;generator&#39;)" id="btn-generator" class="tab-btn active flex-1 py-2.5 rounded-lg font-bold text-sm sm:text-base transition-all text-center">
-                    料號產生器
-                </button>
-                <button onclick="switchTab(&#39;database&#39;)" id="btn-database" class="tab-btn flex-1 py-2.5 rounded-lg font-bold text-sm sm:text-base transition-all text-center">
-                    資料庫設定
-                </button>
-            </div>
-        </div>
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
 
-        <div class="p-4 sm:p-6">
-            <div id="tab-generator" class="fade-in pb-12">
-                <div id="fields-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">1</span>
-                            <span class="truncate"> 公司碼</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">固定碼</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <select onchange="handleUpdate(&#39;company&#39;, this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
-                            <option value="">請選擇...</option><option value="AZ">AZ - 固定碼</option>
-                        </select>
-                        <div class="text-right mt-2 flex justify-end">
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;company&#39;)">擴充選單與備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">2</span>
-                            <span class="truncate"> 封裝碼</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">💡 封裝碼選單會顯示完整名稱，但產出料號時會自動轉換為簡碼。</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <select onchange="handleUpdate(&#39;package&#39;, this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
-                            <option value="">請選擇...</option><option value="H">TO-252</option><option value="H4">TO-252-4</option><option value="H5">TO-252-5</option><option value="F">TO-220F-2L</option><option value="F3">TO-220F</option><option value="FT">TO-220FT</option><option value="FI">TO-220 Isolated</option><option value="I">TO-220</option><option value="I2">TO-220-2L</option><option value="G">PDFN5x6 (punch type)</option><option value="GC">PDFN5x6(Clip)</option><option value="GA">PDFN5x6-DLR</option><option value="GB">PDFN5x6-FDUD (flip chip)</option><option value="GD">PDFN5x6-DUD</option><option value="GX">PDFN5x6X</option><option value="GH">PDFN5x6-DSC</option><option value="GE">PDFN5x6-FL(Source Fuse)</option><option value="Q">PQFN5x6 (saw type)</option><option value="QC">PQFN5x6(Clip)</option><option value="QA">PQFN5x6(預留)</option><option value="QB">PQFN5x6-FDUD-A(flip chip)</option><option value="QD">PQFN5x6-FDUD-B(flip chip)</option><option value="QE">PQFN5x6-FL(Source Fuse)</option><option value="QM">PDFN8x8 (Saw type)</option><option value="QF">PQFN8x8_HV(MOSFET)</option><option value="QH">PQFN5x6-DSC</option><option value="D">PDFN3x3(Punch type)</option><option value="DC">PDFN3x3(Clip)</option><option value="DA">PDFN3x3-DLR</option><option value="DB">PDFN3x3-DDP *共D</option><option value="U">PQFN3333 (Saw type)</option><option value="UC">PQFN3333(Clip)</option><option value="U2">PQFN2x2-6L</option><option value="U3">PQFN3x3</option><option value="UA">保留</option><option value="UB">DFN1006-3L</option><option value="UE">DFN2*3</option><option value="UF">PQFN3333A-DSC *(9pin)</option><option value="UG">PQFN3333A *(9PIN)</option><option value="UH">PQFN3333B-DSC</option><option value="UI">PQFN3333B</option><option value="N">SOT23S</option><option value="NX">SOT-23X (與BU1 SOT-23區別)</option><option value="N6">SOT-26</option><option value="N8">J2928</option><option value="NA">SOT-323</option><option value="NB">SOT-363</option><option value="NC">SOT-523</option><option value="ND">SOT-723</option><option value="NE">SOT-563</option><option value="NF">TSOT-26 *高度較低</option><option value="S">TO-263</option><option value="S7">TO-263-7</option><option value="S6">TO-263-6L</option><option value="T">TOLL</option><option value="TC">TOLL(Clip)</option><option value="TS">sTOLL</option><option value="TH">TOLL_HV</option><option value="TL">TOLT</option><option value="TG">TOLG</option><option value="TQ">QDPAK</option><option value="J">TO-251</option><option value="JB">TO-251S</option><option value="V">TO-247</option><option value="V2">TO-247-2L</option><option value="V4">TO-247-4L</option><option value="E">SOT-223</option><option value="E2">SOT-223-2(HV)</option><option value="M">SO-8</option><option value="P">LFPAK5x6</option><option value="PA">LFPAK5x6-DLR</option><option value="PB">LFPAK3x3</option><option value="PD">LFPAK8x8</option><option value="K">SOT-89</option><option value="L">TSSOP8</option>
-                        </select>
-                        <div class="text-right mt-2 flex justify-end">
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;package&#39;)">擴充選單與備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">3</span>
-                            <span class="truncate"> 製程碼</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">PKG是2碼且是Clip則不用製程碼(T/G/S/P),只用C</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <select onchange="handleUpdate(&#39;process&#39;, this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
-                            <option value="">請選擇...</option><option value="T">T - Trench</option><option value="G">G - SGT</option><option value="S">S - SJ</option><option value="P">P - Planar</option><option value="C">C - Clip Process(包含Full Clip 與Wire+Clip)</option>
-                        </select>
-                        <div class="text-right mt-2 flex justify-end">
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;process&#39;)">擴充選單與備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">4</span>
-                            <span class="truncate"> 電壓碼</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">02=20V
-03=30V
-10=100V
-100=1000V
-120=1200V
-</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <select onchange="handleUpdate(&#39;voltage&#39;, this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
-                            <option value="">請選擇...</option><option value="01">01 - 20V以下</option><option value="02">02 - 20V or 25V</option><option value="03">03 - 30V or 35V</option><option value="06">06 - 60V or 65V</option><option value="08">08 - 80V or 80~89V</option><option value="10">10 - 100 ~109V</option><option value="12">12 - 120V~</option><option value="15">15 - 150V~</option><option value="20">20 - 200V</option><option value="25">25 - 250V</option><option value="30">30 - 300V</option><option value="50">50 - 500V</option><option value="60">60 - 600V</option><option value="65">65 - 650V</option><option value="70">70 - 700V</option><option value="80">80 - 800V</option><option value="90">90 - 900V</option><option value="100">100 - 1000V</option>
-                        </select>
-                        <div class="text-right mt-2 flex justify-end">
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;voltage&#39;)">擴充選單與備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">5</span>
-                            <span class="truncate"> 極性碼</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">N1+N2是指不同die</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <select onchange="handleUpdate(&#39;polarity&#39;, this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
-                            <option value="">請選擇...</option><option value="N">N - N-Channel</option><option value="P">P - P-Channel</option><option value="D">D - Dual N-CH</option><option value="B">B - Dual P-CH</option><option value="C">C - N+P</option><option value="G">G - N1+N2</option>
-                        </select>
-                        <div class="text-right mt-2 flex justify-end">
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;polarity&#39;)">擴充選單與備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">6</span>
-                            <span class="truncate"> 電阻碼</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">A75=0.75mR, 
-1R0=1mR, 
-3R1=3.1mR, 
-050=50mR, 
-150=150mR, 
-1K0=1R
-</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <input type="text" value="" oninput="handleUpdate(&#39;resistance&#39;, this.value.toUpperCase().replace(/[^A-Z0-9]/g, &#39;&#39;))" placeholder="如 045 或 4R7" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs text-slate-400 tracking-wide">自由輸入 (限英數字)</span>
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;resistance&#39;)">修改備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">7</span>
-                            <span class="truncate"> 選用碼 1</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">L=Low VTH ,  
-H=High VTH ,  
-E=ESD , 
-N=外購成品</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <input type="text" value="" oninput="handleUpdate(&#39;opt1&#39;, this.value.toUpperCase().replace(/[^A-Z0-9]/g, &#39;&#39;))" placeholder="無則留空" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs text-slate-400 tracking-wide">自由輸入 (限英數字)</span>
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;opt1&#39;)">修改備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">8</span>
-                            <span class="truncate"> 選用碼 2</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">L=Low VTH ,  
-H=High VTH ,  
-E=ESD , 
-N=外購成品</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <input type="text" value="" oninput="handleUpdate(&#39;opt2&#39;, this.value.toUpperCase().replace(/[^A-Z0-9]/g, &#39;&#39;))" placeholder="無則留空" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs text-slate-400 tracking-wide">自由輸入 (限英數字)</span>
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;opt2&#39;)">修改備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">9</span>
-                            <span class="truncate"> 選用碼 3</span>
-                        </label>
-                        <div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">L=Low VTH ,  
-H=High VTH ,  
-E=ESD , 
-N=外購成品</div>
-                        <div class="mt-auto pt-1">
-                            
-                        <input type="text" value="" oninput="handleUpdate(&#39;opt3&#39;, this.value.toUpperCase().replace(/[^A-Z0-9]/g, &#39;&#39;))" placeholder="無則留空" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs text-slate-400 tracking-wide">自由輸入 (限英數字)</span>
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb(&#39;opt3&#39;)">修改備註 →</span>
-                        </div>
-                    
-                        </div>
-                    </div>
-                </div>
-            </div>
+        // --- 簡易圖示組件 (SVG) ---
+        const IconBase = ({ children, size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>{children}</svg>
+        );
+        const Settings = (props) => <IconBase {...props}><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.47a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></IconBase>;
+        const Copy = (props) => <IconBase {...props}><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></IconBase>;
+        const RefreshCw = (props) => <IconBase {...props}><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></IconBase>;
+        const Plus = (props) => <IconBase {...props}><path d="M5 12h14"/><path d="M12 5v14"/></IconBase>;
+        const Trash2 = (props) => <IconBase {...props}><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></IconBase>;
+        const Database = (props) => <IconBase {...props}><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></IconBase>;
+        const PenTool = (props) => <IconBase {...props}><path d="m12 19 7-7 3 3-7 7-3-3z"/><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="m2 2 7.586 7.586"/><circle cx="11" cy="11" r="2"/></IconBase>;
+        const CheckCircle = (props) => <IconBase {...props}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></IconBase>;
+        const AlertCircle = (props) => <IconBase {...props}><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></IconBase>;
+        const FileSpreadsheet = (props) => <IconBase {...props}><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="M8 13h2"/><path d="M8 17h2"/><path d="M14 13h2"/><path d="M14 17h2"/></IconBase>;
+        const Download = (props) => <IconBase {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></IconBase>;
+        const Upload = (props) => <IconBase {...props}><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></IconBase>;
+        const Save = (props) => <IconBase {...props}><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></IconBase>;
+        const Info = (props) => <IconBase {...props}><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="16" y2="12"/><line x1="12" x2="12.01" y1="8" y2="8"/></IconBase>;
 
-            <div id="tab-database" class="hidden fade-in">
-                
-                <div class="mb-4 grid grid-cols-1 gap-4">
-                    <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3">
-                        <div class="text-xs sm:text-sm text-blue-800">
-                            <p class="font-bold mb-1">操作說明：</p>
-                            <ul class="list-disc list-inside space-y-1">
-                                <li>您可以在此為**所有欄位**設定「填寫說明(備註)」，提示同事輸入規則。</li>
-                                <li>封裝碼支援防呆：組合料號時會自動輸出「代碼值(簡碼)」。</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="p-3 bg-slate-100 border border-slate-200 rounded-lg">
-                        <p class="text-xs sm:text-sm font-bold text-slate-700 mb-2">參數清單備份與還原</p>
-                        <div class="flex gap-2">
-                            <button onclick="exportData()" class="flex-1 bg-white border border-slate-300 py-2 rounded text-sm font-medium hover:bg-slate-50">匯出備份</button>
-                            <button onclick="document.getElementById(&#39;file-import&#39;).click()" class="flex-1 bg-white border border-slate-300 py-2 rounded text-sm font-medium hover:bg-slate-50">匯入還原</button>
-                            <input type="file" id="file-import" accept=".json" onchange="importData(event)">
-                        </div>
-                    </div>
-                </div>
-
-                <div id="alert-box" class="hidden mb-4 p-3 rounded-lg text-sm font-medium"></div>
-
-                <div class="flex flex-col md:flex-row gap-6">
-                    <div class="w-full md:w-1/3 space-y-4">
-                        <div class="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
-                            <div class="mb-4">
-                                <label class="block text-sm font-medium text-slate-600 mb-1">1. 選擇目標欄位</label>
-                                <select id="db-field-select" onchange="loadDbField()" class="w-full p-3 border border-slate-300 rounded-md bg-slate-50 font-bold text-indigo-600 text-base"><option value="company">1. 公司碼</option><option value="package">2. 封裝碼</option><option value="process">3. 製程碼</option><option value="voltage">4. 電壓碼</option><option value="polarity">5. 極性碼</option><option value="resistance">6. 電阻碼</option><option value="opt1">7. 選用碼 1</option><option value="opt2">8. 選用碼 2</option><option value="opt3">9. 選用碼 3</option></select>
-                            </div>
-
-                            <div class="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                                <label class="block text-sm font-bold text-yellow-800 mb-1">填寫說明 (備註)</label>
-                                <textarea id="db-note-input" oninput="saveNote()" class="w-full p-2 border border-yellow-300 rounded text-sm outline-none focus:ring-2 focus:ring-yellow-400" placeholder="輸入備註 (自動儲存)..." rows="2"></textarea>
-                            </div>
-
-                            <div id="db-input-hint" class="hidden p-4 bg-slate-50 text-slate-500 rounded-lg text-sm text-center border border-slate-200">
-                                <svg class="w-8 h-8 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
-                                此為自由輸入欄位，無需設定下拉選項。<br>您可於上方編輯「填寫說明」即可。
-                            </div>
-
-                            <div id="db-options-editor">
-                                <div class="flex bg-slate-100 p-1 rounded-lg mb-4">
-                                    <button onclick="setAddMode(&#39;single&#39;)" id="btn-mode-single" class="flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold">單筆輸入</button>
-                                    <button onclick="setAddMode(&#39;batch&#39;)" id="btn-mode-batch" class="flex-1 py-2 text-sm rounded-md text-slate-500">Excel 匯入</button>
-                                </div>
-
-                                <div id="mode-single" class="space-y-3">
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-600 mb-1">代碼值 (產出於料號)</label>
-                                        <input type="text" id="db-val-input" placeholder="輸入代號" class="w-full p-3 border border-slate-300 rounded-md font-mono uppercase text-base">
-                                    </div>
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-600 mb-1">選項說明 (顯示於選單)</label>
-                                        <input type="text" id="db-lbl-input" placeholder="說明文字..." class="w-full p-3 border border-slate-300 rounded-md text-base">
-                                    </div>
-                                    <button onclick="addSingleOption()" class="w-full bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition mt-2 font-bold text-base">新增選項</button>
-                                </div>
-
-                                <div id="mode-batch" class="space-y-3 hidden">
-                                    <div>
-                                        <label class="block text-sm font-medium text-slate-600 mb-1">貼上 Excel 資料 (兩欄)</label>
-                                        <textarea id="db-batch-input" rows="5" placeholder="左欄代碼	右欄說明
-D5	DFN5x6" class="w-full p-3 border border-slate-300 rounded-md font-mono text-sm leading-relaxed"></textarea>
-                                    </div>
-                                    <button onclick="addBatchOptions()" class="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition mt-2 font-bold text-base">開始解析匯入</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="w-full md:w-2/3" id="db-list-container">
-                        <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden flex flex-col h-full min-h-[300px]">
-                            <div class="p-3 bg-slate-50 border-b border-slate-200 font-bold text-slate-700 flex justify-between items-center">
-                                <span id="db-list-title" class="text-sm">1. 公司碼 - 選項</span>
-                                <span id="db-list-count" class="text-xs font-normal text-slate-500 bg-white px-2 py-1 rounded border">1 筆</span>
-                            </div>
-                            <div class="flex-1 overflow-y-auto p-2" id="db-options-list"><ul class="space-y-2">
-                    <li class="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-lg shadow-sm">
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            <span class="font-mono bg-indigo-50 text-indigo-700 px-3 py-1 rounded font-bold border border-indigo-100 min-w-[50px] text-center text-sm shrink-0">AZ</span>
-                            <span class="text-slate-700 font-medium text-sm truncate">固定碼</span>
-                        </div>
-                        <button onclick="removeOption(&#39;company&#39;, 0)" class="text-slate-300 hover:text-red-500 transition-colors p-3 -mr-2" title="刪除">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"></path></svg>
-                        </button>
-                    </li>
-                </ul></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="sticky-footer" class="fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 shadow-[0_-10px_20px_-5px_rgba(0,0,0,0.1)] p-4 pb-safe z-50 transition-transform duration-300 transform translate-y-0">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center gap-3">
-            <div class="flex-1 w-full text-center sm:text-left overflow-hidden">
-                <div class="text-[10px] text-slate-400 font-medium uppercase mb-0.5">預覽料號</div>
-                <div id="display-code" class="text-2xl sm:text-3xl font-mono font-bold tracking-wider text-slate-400 break-all truncate">請開始輸入規格...</div>
-            </div>
-            <div class="flex w-full sm:w-auto gap-2">
-                <button onclick="clearSelections()" class="px-4 py-3 bg-slate-100 border border-slate-200 text-slate-600 rounded-lg hover:bg-slate-200 font-bold text-sm shrink-0">
-                    清除
-                </button>
-                <button onclick="copyCode()" class="flex-1 sm:px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 font-bold text-sm shadow-md flex justify-center items-center gap-2 active:scale-95 transition-transform">
-                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>
-                    <span id="copy-text">複製</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // 1. 欄位定義 (9 個欄位)：區分 type 為 select 或 input
-        const FIELDS = [
-            { id: 'company', label: '1. 公司碼', type: 'select' },
-            { id: 'package', label: '2. 封裝碼', type: 'select' },
-            { id: 'process', label: '3. 製程碼', type: 'select' },
-            { id: 'voltage', label: '4. 電壓碼', type: 'select' },
-            { id: 'polarity', label: '5. 極性碼', type: 'select' },
-            { id: 'resistance', label: '6. 電阻碼', type: 'input', placeholder: '如 045 或 4R7' },
-            { id: 'opt1', label: '7. 選用碼 1', type: 'input', placeholder: '無則留空' },
-            { id: 'opt2', label: '8. 選用碼 2', type: 'input', placeholder: '無則留空' },
-            { id: 'opt3', label: '9. 選用碼 3', type: 'input', placeholder: '無則留空' },
+        // --- 主要邏輯 (調整欄位 6~11 為 input 模式) ---
+        const INITIAL_FIELD_CONFIG = [
+          { id: 1, label: '第一組 - 成品', length: 1, description: '第 1 碼', placeholder: 'A', inputType: 'select' },
+          { id: 2, label: '第二組 - 供應商', length: 2, description: '第 2-3 碼', placeholder: '01', inputType: 'select' },
+          { id: 3, label: '第三組 - 封裝', length: 2, description: '第 4-5 碼', placeholder: 'TO', inputType: 'select' },
+          { id: 4, label: '第四組 - FAB', length: 1, description: '第 6 碼', placeholder: 'F', inputType: 'select' },
+          { id: 5, label: '第五組 - 製程', length: 1, description: '第 7 碼', placeholder: 'P', inputType: 'select' },
+          { id: 6, label: '第六組 - BVDSS', length: 2, description: '第 8-9 碼', placeholder: '30', inputType: 'input' },
+          { id: 7, label: '第七組 - 極性', length: 1, description: '第 10 碼', placeholder: 'N', inputType: 'input' },
+          { id: 8, label: '第八組 - 電阻', length: 3, description: '第 11-13 碼', placeholder: '005', inputType: 'input' }, 
+          { id: 9, label: '第九組 - 選項1', length: 1, description: '第 14 碼', placeholder: 'A', inputType: 'input' },
+          { id: 10, label: '第十組 - 選項2', length: 1, description: '第 15 碼', placeholder: 'B', inputType: 'input' },
+          { id: 11, label: '第十一組 - 車規碼', length: 1, description: '第 16 碼', placeholder: 'V', inputType: 'input' },
         ];
 
-        // 2. 預設資料 (僅需前五碼的選單)
         const DEFAULT_OPTIONS = {
-            'options': {
-    'company': [
-      {
-        'value': 'AZ',
-        'label': 'AZ - 固定碼'
-      }
-    ],
-    'package': [
-      {
-        'value': 'H',
-        'label': 'TO-252'
-      },
-      {
-        'value': 'H4',
-        'label': 'TO-252-4'
-      },
-      {
-        'value': 'H5',
-        'label': 'TO-252-5'
-      },
-      {
-        'value': 'F',
-        'label': 'TO-220F-2L'
-      },
-      {
-        'value': 'F3',
-        'label': 'TO-220F'
-      },
-      {
-        'value': 'FT',
-        'label': 'TO-220FT'
-      },
-      {
-        'value': 'FI',
-        'label': 'TO-220 Isolated'
-      },
-      {
-        'value': 'I',
-        'label': 'TO-220'
-      },
-      {
-        'value': 'I2',
-        'label': 'TO-220-2L'
-      },
-      {
-        'value': 'G',
-        'label': 'PDFN5x6 (punch type)'
-      },
-      {
-        'value': 'GC',
-        'label': 'PDFN5x6(Clip)'
-      },
-      {
-        'value': 'GA',
-        'label': 'PDFN5x6-DLR'
-      },
-      {
-        'value': 'GB',
-        'label': 'PDFN5x6-FDUD (flip chip)'
-      },
-      {
-        'value': 'GD',
-        'label': 'PDFN5x6-DUD'
-      },
-      {
-        'value': 'GX',
-        'label': 'PDFN5x6X'
-      },
-      {
-        'value': 'GH',
-        'label': 'PDFN5x6-DSC'
-      },
-      {
-        'value': 'GE',
-        'label': 'PDFN5x6-FL(Source Fuse)'
-      },
-      {
-        'value': 'Q',
-        'label': 'PQFN5x6 (saw type)'
-      },
-      {
-        'value': 'QC',
-        'label': 'PQFN5x6(Clip)'
-      },
-      {
-        'value': 'QA',
-        'label': 'PQFN5x6(預留)'
-      },
-      {
-        'value': 'QB',
-        'label': 'PQFN5x6-FDUD-A(flip chip)'
-      },
-      {
-        'value': 'QD',
-        'label': 'PQFN5x6-FDUD-B(flip chip)'
-      },
-      {
-        'value': 'QE',
-        'label': 'PQFN5x6-FL(Source Fuse)'
-      },
-      {
-        'value': 'QM',
-        'label': 'PDFN8x8 (Saw type)'
-      },
-      {
-        'value': 'QF',
-        'label': 'PQFN8x8_HV(MOSFET)'
-      },
-      {
-        'value': 'QH',
-        'label': 'PQFN5x6-DSC'
-      },
-      {
-        'value': 'D',
-        'label': 'PDFN3x3(Punch type)'
-      },
-      {
-        'value': 'DC',
-        'label': 'PDFN3x3(Clip)'
-      },
-      {
-        'value': 'DA',
-        'label': 'PDFN3x3-DLR'
-      },
-      {
-        'value': 'DB',
-        'label': 'PDFN3x3-DDP *共D'
-      },
-      {
-        'value': 'U',
-        'label': 'PQFN3333 (Saw type)'
-      },
-      {
-        'value': 'UC',
-        'label': 'PQFN3333(Clip)'
-      },
-      {
-        'value': 'U2',
-        'label': 'PQFN2x2-6L'
-      },
-      {
-        'value': 'U3',
-        'label': 'PQFN3x3'
-      },
-      {
-        'value': 'UA',
-        'label': '保留'
-      },
-      {
-        'value': 'UB',
-        'label': 'DFN1006-3L'
-      },
-      {
-        'value': 'UE',
-        'label': 'DFN2*3'
-      },
-      {
-        'value': 'UF',
-        'label': 'PQFN3333A-DSC *(9pin)'
-      },
-      {
-        'value': 'UG',
-        'label': 'PQFN3333A *(9PIN)'
-      },
-      {
-        'value': 'UH',
-        'label': 'PQFN3333B-DSC'
-      },
-      {
-        'value': 'UI',
-        'label': 'PQFN3333B'
-      },
-      {
-        'value': 'N',
-        'label': 'SOT23S'
-      },
-      {
-        'value': 'NX',
-        'label': 'SOT-23X (與BU1 SOT-23區別)'
-      },
-      {
-        'value': 'N6',
-        'label': 'SOT-26'
-      },
-      {
-        'value': 'N8',
-        'label': 'J2928'
-      },
-      {
-        'value': 'NA',
-        'label': 'SOT-323'
-      },
-      {
-        'value': 'NB',
-        'label': 'SOT-363'
-      },
-      {
-        'value': 'NC',
-        'label': 'SOT-523'
-      },
-      {
-        'value': 'ND',
-        'label': 'SOT-723'
-      },
-      {
-        'value': 'NE',
-        'label': 'SOT-563'
-      },
-      {
-        'value': 'NF',
-        'label': 'TSOT-26 *高度較低'
-      },
-      {
-        'value': 'S',
-        'label': 'TO-263'
-      },
-      {
-        'value': 'S7',
-        'label': 'TO-263-7'
-      },
-      {
-        'value': 'S6',
-        'label': 'TO-263-6L'
-      },
-      {
-        'value': 'T',
-        'label': 'TOLL'
-      },
-      {
-        'value': 'TC',
-        'label': 'TOLL(Clip)'
-      },
-      {
-        'value': 'TS',
-        'label': 'sTOLL'
-      },
-      {
-        'value': 'TH',
-        'label': 'TOLL_HV'
-      },
-      {
-        'value': 'TL',
-        'label': 'TOLT'
-      },
-      {
-        'value': 'TG',
-        'label': 'TOLG'
-      },
-      {
-        'value': 'TQ',
-        'label': 'QDPAK'
-      },
-      {
-        'value': 'J',
-        'label': 'TO-251'
-      },
-      {
-        'value': 'JB',
-        'label': 'TO-251S'
-      },
-      {
-        'value': 'V',
-        'label': 'TO-247'
-      },
-      {
-        'value': 'V2',
-        'label': 'TO-247-2L'
-      },
-      {
-        'value': 'V4',
-        'label': 'TO-247-4L'
-      },
-      {
-        'value': 'E',
-        'label': 'SOT-223'
-      },
-      {
-        'value': 'E2',
-        'label': 'SOT-223-2(HV)'
-      },
-      {
-        'value': 'M',
-        'label': 'SO-8'
-      },
-      {
-        'value': 'P',
-        'label': 'LFPAK5x6'
-      },
-      {
-        'value': 'PA',
-        'label': 'LFPAK5x6-DLR'
-      },
-      {
-        'value': 'PB',
-        'label': 'LFPAK3x3'
-      },
-      {
-        'value': 'PD',
-        'label': 'LFPAK8x8'
-      },
-      {
-        'value': 'K',
-        'label': 'SOT-89'
-      },
-      {
-        'value': 'L',
-        'label': 'TSSOP8'
-      }
-    ],
-    'process': [
-      {
-        'value': 'T',
-        'label': 'T - Trench'
-      },
-      {
-        'value': 'G',
-        'label': 'G - SGT'
-      },
-      {
-        'value': 'S',
-        'label': 'S - SJ'
-      },
-      {
-        'value': 'P',
-        'label': 'P - Planar'
-      },
-      {
-        'value': 'C',
-        'label': 'C - Clip Process(包含Full Clip 與Wire+Clip)'
-      }
-    ],
-    'voltage': [
-      {
-        'value': '01',
-        'label': '01 - 20V以下'
-      },
-      {
-        'value': '02',
-        'label': '02 - 20V or 25V'
-      },
-      {
-        'value': '03',
-        'label': '03 - 30V or 35V'
-      },
-      {
-        'value': '06',
-        'label': '06 - 60V or 65V'
-      },
-      {
-        'value': '08',
-        'label': '08 - 80V or 80~89V'
-      },
-      {
-        'value': '10',
-        'label': '10 - 100 ~109V'
-      },
-      {
-        'value': '12',
-        'label': '12 - 120V~'
-      },
-      {
-        'value': '15',
-        'label': '15 - 150V~'
-      },
-      {
-        'value': '20',
-        'label': '20 - 200V'
-      },
-      {
-        'value': '25',
-        'label': '25 - 250V'
-      },
-      {
-        'value': '30',
-        'label': '30 - 300V'
-      },
-      {
-        'value': '50',
-        'label': '50 - 500V'
-      },
-      {
-        'value': '60',
-        'label': '60 - 600V'
-      },
-      {
-        'value': '65',
-        'label': '65 - 650V'
-      },
-      {
-        'value': '70',
-        'label': '70 - 700V'
-      },
-      {
-        'value': '80',
-        'label': '80 - 800V'
-      },
-      {
-        'value': '90',
-        'label': '90 - 900V'
-      },
-      {
-        'value': '100',
-        'label': '100 - 1000V'
-      }
-    ],
-    'polarity': [
-      {
-        'value': 'N',
-        'label': 'N - N-Channel'
-      },
-      {
-        'value': 'P',
-        'label': 'P - P-Channel'
-      },
-      {
-        'value': 'D',
-        'label': 'D - Dual N-CH'
-      },
-      {
-        'value': 'B',
-        'label': 'B - Dual P-CH'
-      },
-      {
-        'value': 'C',
-        'label': 'C - N+P'
-      },
-      {
-        'value': 'G',
-        'label': 'G - N1+N2'
-      }
-    ],
-    'resistance': [
-      {
-        'value': 'A45',
-        'label': 'A45 - 0.45mR'
-      },
-      {
-        'value': 'A75',
-        'label': 'A75 - 0.75mR'
-      },
-      {
-        'value': 'A85',
-        'label': 'A85 - 0.85mR'
-      },
-      {
-        'value': '1R0',
-        'label': '1R0 - 1mR'
-      }
-    ],
-    'opt1': [
-      {
-        'value': 'A',
-        'label': 'A - 車規'
-      }
-    ],
-    'opt2': [],
-    'opt3': []
-          };
+          1: [{ value: 'A', label: 'A - MOSFET' }, { value: 'B', label: 'B - IC' }],
+          2: [{ value: 'TS', label: 'TS - 台積電' }, { value: 'UM', label: 'UM - 聯電' }],
+          3: [{ value: '23', label: '23 - SOT-23' }, { value: '52', label: '52 - TO-252' }],
+          4: [{ value: 'F', label: 'F - FAB A' }],
+          5: [{ value: 'P', label: 'P - Process A' }]
+        };
 
         const DEFAULT_NOTES = {
-            'package': "💡 封裝碼選單會顯示完整名稱，但產出料號時會自動轉換為簡碼。",
-            'resistance': "💡 建議格式：整數用3碼 (如 045)，含小數點用 R (如 4R7)"
+            1: "請依照產品線選擇，若為開發中產品請選 B",
+            6: "💡 提示：輸入數字如 30, 60",
+            8: "💡 提示：電阻為3碼，例如 4.5mΩ 請填 004，含小數點用 R (如 4R7)"
         };
 
-        // 全域狀態
-        let optionsData = {};
-        let notesData = {};
-        let selectionsData = {};
+        function App() {
+          const [activeTab, setActiveTab] = useState('generator');
+          const [fieldOptions, setFieldOptions] = useState(DEFAULT_OPTIONS);
+          const [fieldNotes, setFieldNotes] = useState(DEFAULT_NOTES);
+          const [selections, setSelections] = useState({});
+          const [generatedCode, setGeneratedCode] = useState('');
+          const [copySuccess, setCopySuccess] = useState(false);
+          const fileInputRef = useRef(null);
 
-        // 3. 初始化
-        window.onload = function() {
-            loadFromStorage();
-            initSelections();
-            renderGeneratorFields();
-            initDatabaseTab();
-            updateCodeDisplay();
-        };
+          useEffect(() => {
+            try {
+                const savedOptionsV3 = localStorage.getItem('codeGenOptions_v3');
+                const savedNotesV3 = localStorage.getItem('codeGenNotes_v3');
 
-        function loadFromStorage() {
-            const savedOptions = localStorage.getItem('pnMobileOptions_v3');
-            const savedNotes = localStorage.getItem('pnMobileNotes_v3');
-            
-            if (savedOptions) {
-                optionsData = JSON.parse(savedOptions);
-            } else {
-                optionsData = JSON.parse(JSON.stringify(DEFAULT_OPTIONS));
-            }
-
-            if (savedNotes) {
-                notesData = JSON.parse(savedNotes);
-            } else {
-                notesData = JSON.parse(JSON.stringify(DEFAULT_NOTES));
-            }
-
-            FIELDS.filter(f => f.type === 'select').forEach(f => {
-                if(!optionsData[f.id]) optionsData[f.id] = [];
-            });
-        }
-
-        function saveToStorage() {
-            localStorage.setItem('pnMobileOptions_v3', JSON.stringify(optionsData));
-            localStorage.setItem('pnMobileNotes_v3', JSON.stringify(notesData));
-        }
-
-        function initSelections() {
-            FIELDS.forEach(f => { selectionsData[f.id] = ''; });
-        }
-
-        // ================= TAB 1: 產生器邏輯 =================
-
-        function renderGeneratorFields() {
-            const container = document.getElementById('fields-container');
-            let html = '';
-            
-            FIELDS.forEach(f => {
-                const note = notesData[f.id];
-                let inputControlHtml = '';
-
-                // 根據 type 決定要畫 <select> 還是 <input>
-                if (f.type === 'select') {
-                    const opts = optionsData[f.id] || [];
-                    let optionsHtml = '<option value="">請選擇...</option>';
-                    opts.forEach(o => {
-                        const selected = selectionsData[f.id] === o.value ? 'selected' : '';
-                        optionsHtml += `<option value="${o.value}" ${selected}>${o.label}</option>`;
-                    });
-
-                    inputControlHtml = `
-                        <select onchange="handleUpdate('${f.id}', this.value)" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-medium text-slate-800 appearance-none">
-                            ${optionsHtml}
-                        </select>
-                        <div class="text-right mt-2 flex justify-end">
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb('${f.id}')">擴充選單與備註 &rarr;</span>
-                        </div>
-                    `;
+                if (savedOptionsV3) {
+                    setFieldOptions(JSON.parse(savedOptionsV3));
+                    if (savedNotesV3) setFieldNotes(JSON.parse(savedNotesV3));
                 } else {
-                    // 輸入框模式
-                    const val = selectionsData[f.id] || '';
-                    inputControlHtml = `
-                        <input type="text" value="${val}" oninput="handleUpdate('${f.id}', this.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))" placeholder="${f.placeholder || ''}" class="w-full p-3 sm:p-3.5 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none text-base font-mono text-slate-800 uppercase placeholder-slate-400">
-                        <div class="flex justify-between items-center mt-2">
-                            <span class="text-xs text-slate-400 tracking-wide">自由輸入 (限英數字)</span>
-                            <span class="text-xs text-indigo-500 cursor-pointer p-1" onclick="jumpToDb('${f.id}')">修改備註 &rarr;</span>
-                        </div>
-                    `;
+                    const savedOptionsV2 = localStorage.getItem('codeGenOptions_v2');
+                    if (savedOptionsV2) {
+                        const parsedV2 = JSON.parse(savedOptionsV2);
+                        const migratedOptions = { ...DEFAULT_OPTIONS };
+                        Object.keys(parsedV2).forEach(key => {
+                            if (parseInt(key) <= 11) {
+                                migratedOptions[key] = parsedV2[key];
+                            }
+                        });
+                        setFieldOptions(migratedOptions);
+                        localStorage.setItem('codeGenOptions_v3', JSON.stringify(migratedOptions));
+                    }
                 }
+            } catch (e) {
+                console.warn("讀取資料發生錯誤", e);
+            }
 
-                html += `
-                    <div class="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 hover:border-indigo-300 shadow-sm flex flex-col">
-                        <label class="font-bold text-slate-700 flex items-center gap-2 text-sm sm:text-base mb-2">
-                            <span class="bg-indigo-100 text-indigo-700 w-6 h-6 rounded-full flex items-center justify-center text-xs shrink-0">${f.label.charAt(0)}</span>
-                            <span class="truncate">${f.label.substring(2)}</span>
-                        </label>
-                        ${note ? `<div class="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-xs text-yellow-800 leading-relaxed">${note}</div>` : ''}
-                        <div class="mt-auto pt-1">
-                            ${inputControlHtml}
-                        </div>
-                    </div>
-                `;
+            const initialSelections = {};
+            INITIAL_FIELD_CONFIG.forEach(field => {
+              initialSelections[field.id] = '';
             });
-            container.innerHTML = html;
-        }
+            setSelections(initialSelections);
+          }, []);
 
-        // 統一更新狀態
-        function handleUpdate(fieldId, value) {
-            selectionsData[fieldId] = value;
-            updateCodeDisplay();
-        }
+          const saveToLocal = (newOptions) => {
+            setFieldOptions(newOptions);
+            localStorage.setItem('codeGenOptions_v3', JSON.stringify(newOptions));
+          };
+          
+          const saveNotesToLocal = (newNotes) => {
+              setFieldNotes(newNotes);
+              localStorage.setItem('codeGenNotes_v3', JSON.stringify(newNotes));
+          };
 
-        function updateCodeDisplay() {
-            let codeParts = [];
-            FIELDS.forEach(f => {
-                if (selectionsData[f.id]) {
-                    codeParts.push(selectionsData[f.id]);
-                }
+          // 🌟 關鍵修正區：計算 16 碼 (即時顯示，自動補底線)
+          useEffect(() => {
+            let code = '';
+            INITIAL_FIELD_CONFIG.forEach(field => {
+              let val = selections[field.id] || '';
+              
+              // 確保代碼不會超過限制的長度
+              if (val.length > field.length) {
+                  val = val.substring(0, field.length);
+              }
+              
+              // 如果使用者輸入或選擇的長度不足，自動用底線補齊剩下的空位
+              // 這樣使用者一打字或一選擇，就能立刻在上方看到結果！
+              if (val.length < field.length) {
+                  code += val + '_'.repeat(field.length - val.length);
+              } else {
+                  code += val;
+              }
             });
-            const code = codeParts.join(''); 
-            const displayObj = document.getElementById('display-code');
-            
-            if (code) {
-                displayObj.innerText = code;
-                displayObj.classList.remove('text-slate-400');
-                displayObj.classList.add('text-indigo-600');
-            } else {
-                displayObj.innerText = '請開始輸入規格...';
-                displayObj.classList.add('text-slate-400');
-                displayObj.classList.remove('text-indigo-600');
-            }
-        }
+            setGeneratedCode(code);
+          }, [selections]);
 
-        function clearSelections() {
-            initSelections();
-            renderGeneratorFields();
-            updateCodeDisplay();
-        }
+          const handleSelectionChange = (fieldId, value) => {
+            setSelections(prev => ({ ...prev, [fieldId]: value }));
+          };
 
-        function copyCode() {
-            const code = document.getElementById('display-code').innerText;
-            if(code === '請開始輸入規格...' || !code) {
-                alert('請先選擇或輸入料號條件！');
-                return;
+          const copyToClipboard = () => {
+            if (generatedCode.includes('_')) {
+              alert('尚有未完成的代碼 (底線部分)，請先填寫完整 16 碼！');
+              return;
             }
-            navigator.clipboard.writeText(code).then(() => {
-                const btnText = document.getElementById('copy-text');
-                btnText.innerText = '已複製';
-                setTimeout(() => { btnText.innerText = '複製'; }, 2000);
+            navigator.clipboard.writeText(generatedCode).then(() => {
+              setCopySuccess(true);
+              setTimeout(() => setCopySuccess(false), 2000);
             });
-        }
+          };
 
-        function jumpToDb(fieldId) {
-            switchTab('database');
-            document.getElementById('db-field-select').value = fieldId;
-            loadDbField();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+          const [editingFieldId, setEditingFieldId] = useState(1);
+          const [addMode, setAddMode] = useState('single');
+          const [newOptionValue, setNewOptionValue] = useState('');
+          const [newOptionLabel, setNewOptionLabel] = useState('');
+          const [batchText, setBatchText] = useState('');
+          const [addError, setAddError] = useState('');
+          const [addSuccessMsg, setAddSuccessMsg] = useState('');
+          
+          const handleNoteChange = (val) => {
+              const newNotes = { ...fieldNotes, [editingFieldId]: val };
+              saveNotesToLocal(newNotes);
+          };
 
-        // ================= TAB 2: 資料庫邏輯 =================
-
-        function initDatabaseTab() {
-            const selectObj = document.getElementById('db-field-select');
-            let html = '';
-            // 放出「所有欄位」讓使用者都可以改備註
-            FIELDS.forEach(f => {
-                html += `<option value="${f.id}">${f.label}</option>`;
-            });
-            selectObj.innerHTML = html;
-            loadDbField();
-        }
-
-        function loadDbField() {
-            const fieldId = document.getElementById('db-field-select').value;
-            const titleObj = document.getElementById('db-list-title');
-            const fieldConfig = FIELDS.find(f => f.id === fieldId);
+          const addOption = () => {
+            const currentField = INITIAL_FIELD_CONFIG.find(f => f.id === editingFieldId);
+            setAddSuccessMsg('');
             
-            // 載入該欄位備註
-            document.getElementById('db-note-input').value = notesData[fieldId] || '';
-            
-            const editorDiv = document.getElementById('db-options-editor');
-            const listDiv = document.getElementById('db-list-container');
-            const hintDiv = document.getElementById('db-input-hint');
-
-            if (fieldConfig.type === 'input') {
-                // 若為自由輸入，隱藏清單與選項編輯器，顯示提示
-                editorDiv.classList.add('hidden');
-                listDiv.classList.add('hidden');
-                hintDiv.classList.remove('hidden');
-            } else {
-                // 若為下拉選單，正常顯示
-                editorDiv.classList.remove('hidden');
-                listDiv.classList.remove('hidden');
-                hintDiv.classList.add('hidden');
-                
-                titleObj.innerText = `${fieldConfig.label} - 選項`;
-                renderDbOptionsList(fieldId);
+            if (!newOptionValue || !newOptionLabel) {
+              setAddError('代碼值與說明皆為必填');
+              return;
             }
-        }
-
-        function renderDbOptionsList(fieldId) {
-            const listObj = document.getElementById('db-options-list');
-            const countObj = document.getElementById('db-list-count');
-            const opts = optionsData[fieldId] || [];
             
-            countObj.innerText = `${opts.length} 筆`;
+            const updatedOptions = {
+              ...fieldOptions,
+              [editingFieldId]: [
+                ...(fieldOptions[editingFieldId] || []),
+                { value: newOptionValue, label: `${newOptionValue} - ${newOptionLabel}` }
+              ]
+            };
 
-            if (opts.length === 0) {
-                listObj.innerHTML = `<div class="text-center text-slate-400 mt-10 text-sm">此欄位尚未建立資料。</div>`;
-                return;
+            saveToLocal(updatedOptions);
+            setNewOptionValue('');
+            setNewOptionLabel('');
+            setAddError('');
+            setAddSuccessMsg('新增成功！');
+            setTimeout(() => setAddSuccessMsg(''), 2000);
+          };
+
+          const handleBatchImport = () => {
+            setAddError('');
+            setAddSuccessMsg('');
+            if (!batchText.trim()) {
+              setAddError('請先貼上資料');
+              return;
             }
 
-            let html = '<ul class="space-y-2">';
-            opts.forEach((o, idx) => {
-                const displayLabel = fieldId === 'package' ? o.label : (o.label.split(' - ')[1] || o.label);
-                html += `
-                    <li class="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-lg shadow-sm">
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            <span class="font-mono bg-indigo-50 text-indigo-700 px-3 py-1 rounded font-bold border border-indigo-100 min-w-[50px] text-center text-sm shrink-0">${o.value}</span>
-                            <span class="text-slate-700 font-medium text-sm truncate">${displayLabel}</span>
-                        </div>
-                        <button onclick="removeOption('${fieldId}', ${idx})" class="text-slate-300 hover:text-red-500 transition-colors p-3 -mr-2" title="刪除">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
-                        </button>
-                    </li>
-                `;
-            });
-            html += '</ul>';
-            listObj.innerHTML = html;
-        }
-
-        function saveNote() {
-            const fieldId = document.getElementById('db-field-select').value;
-            notesData[fieldId] = document.getElementById('db-note-input').value;
-            saveToStorage();
-            renderGeneratorFields(); 
-        }
-
-        function addSingleOption() {
-            const fieldId = document.getElementById('db-field-select').value;
-            let val = document.getElementById('db-val-input').value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-            let lbl = document.getElementById('db-lbl-input').value.trim();
-
-            if (!val) {
-                showAlert('代碼值為必填且只能為英數字！', false); return;
-            }
-
-            const finalLabel = lbl ? (fieldId === 'package' ? lbl : `${val} - ${lbl}`) : val;
-            optionsData[fieldId].push({ value: val, label: finalLabel });
-            
-            finishAdding(fieldId, '新增成功！');
-            document.getElementById('db-val-input').value = '';
-            document.getElementById('db-lbl-input').value = '';
-        }
-
-        function addBatchOptions() {
-            const fieldId = document.getElementById('db-field-select').value;
-            const text = document.getElementById('db-batch-input').value.trim();
-            if (!text) {
-                showAlert('請先貼上資料！', false); return;
-            }
-
-            const lines = text.split('\n');
-            let addedCount = 0;
+            const currentField = INITIAL_FIELD_CONFIG.find(f => f.id === editingFieldId);
+            const lines = batchText.trim().split('\n');
+            const newItems = [];
+            let errorCount = 0;
 
             lines.forEach(line => {
-                let parts = line.split('\t');
-                if (parts.length < 2) parts = line.split(',');
+              let parts = line.split('\t');
+              if (parts.length < 2) parts = line.split(',');
 
-                if (parts.length >= 2) {
-                    let val = parts[0].trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-                    let lbl = parts[1].trim();
-                    if (val && lbl) {
-                        optionsData[fieldId].push({ value: val, label: fieldId === 'package' ? lbl : `${val} - ${lbl}` });
-                        addedCount++;
-                    }
+              if (parts.length >= 2) {
+                const val = parts[0].trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                const labelText = parts[1].trim();
+                if (val && labelText) {
+                  newItems.push({ value: val, label: `${val} - ${labelText}` });
                 } else {
-                    let val = line.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
-                    if(val) {
-                        optionsData[fieldId].push({ value: val, label: val });
-                        addedCount++;
-                    }
+                  errorCount++;
                 }
+              } else {
+                errorCount++;
+              }
             });
 
-            if(addedCount > 0) {
-                finishAdding(fieldId, `成功匯入 ${addedCount} 筆資料！`);
-                document.getElementById('db-batch-input').value = '';
-            } else {
-                showAlert('無法識別有效資料，請檢查格式。', false);
+            if (newItems.length === 0) {
+              setAddError('無法識別任何有效資料，請確認格式為「代碼(Tab)說明」。');
+              return;
             }
-        }
 
-        function removeOption(fieldId, index) {
-            optionsData[fieldId].splice(index, 1);
-            finishAdding(fieldId, '已刪除該選項。');
-        }
+            const updatedOptions = {
+              ...fieldOptions,
+              [editingFieldId]: [
+                ...(fieldOptions[editingFieldId] || []),
+                ...newItems
+              ]
+            };
 
-        function finishAdding(fieldId, msg) {
-            saveToStorage();
-            renderDbOptionsList(fieldId);
-            renderGeneratorFields(); 
-            showAlert(msg, true);
-        }
+            saveToLocal(updatedOptions);
+            setBatchText('');
+            setAddSuccessMsg(`成功匯入 ${newItems.length} 筆資料！${errorCount > 0 ? `(${errorCount} 筆格式錯誤忽略)` : ''}`);
+            setTimeout(() => setAddSuccessMsg(''), 3000);
+          };
 
-        // ================= UI 輔助功能 =================
+          const removeOption = (fieldId, indexToRemove) => {
+            const updatedOptions = {
+              ...fieldOptions,
+              [fieldId]: fieldOptions[fieldId].filter((_, index) => index !== indexToRemove)
+            };
+            saveToLocal(updatedOptions);
+          };
 
-        function switchTab(tab) {
-            const genTab = document.getElementById('tab-generator');
-            const dbTab = document.getElementById('tab-database');
-            const genBtn = document.getElementById('btn-generator');
-            const dbBtn = document.getElementById('btn-database');
-            const stickyFooter = document.getElementById('sticky-footer');
+          const clearAll = () => {
+             const initialSelections = {};
+            INITIAL_FIELD_CONFIG.forEach(field => {
+              initialSelections[field.id] = '';
+            });
+            setSelections(initialSelections);
+          }
 
-            if (tab === 'generator') {
-                genTab.classList.remove('hidden');
-                dbTab.classList.add('hidden');
-                genBtn.classList.add('active', 'bg-white', 'text-indigo-600');
-                genBtn.classList.remove('bg-indigo-700', 'text-indigo-100');
-                dbBtn.classList.remove('active', 'bg-white', 'text-indigo-600');
-                dbBtn.classList.add('bg-indigo-700', 'text-indigo-100');
-                
-                stickyFooter.classList.remove('translate-y-full');
-            } else {
-                dbTab.classList.remove('hidden');
-                genTab.classList.add('hidden');
-                dbBtn.classList.add('active', 'bg-white', 'text-indigo-600');
-                dbBtn.classList.remove('bg-indigo-700', 'text-indigo-100');
-                genBtn.classList.remove('active', 'bg-white', 'text-indigo-600');
-                genBtn.classList.add('bg-indigo-700', 'text-indigo-100');
-                
-                stickyFooter.classList.add('translate-y-full');
-            }
-        }
+          const downloadTemplate = () => {
+             const csvContent = "data:text/csv;charset=utf-8,Code,Description\nA0,範例選項1\nB1,範例選項2";
+             const encodedUri = encodeURI(csvContent);
+             const link = document.createElement("a");
+             link.setAttribute("href", encodedUri);
+             link.setAttribute("download", "import_template.csv");
+             document.body.appendChild(link);
+             link.click();
+          }
 
-        function setAddMode(mode) {
-            const sDiv = document.getElementById('mode-single');
-            const bDiv = document.getElementById('mode-batch');
-            const sBtn = document.getElementById('btn-mode-single');
-            const bBtn = document.getElementById('btn-mode-batch');
+          const handleExportBackup = () => {
+            const backupData = {
+                options: fieldOptions,
+                notes: fieldNotes
+            };
+            const dataStr = JSON.stringify(backupData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            const exportFileDefaultName = `codegen_backup_${new Date().toISOString().slice(0,10)}.json`;
 
-            if (mode === 'single') {
-                sDiv.classList.remove('hidden'); bDiv.classList.add('hidden');
-                sBtn.className = "flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold";
-                bBtn.className = "flex-1 py-2 text-sm rounded-md text-slate-500";
-            } else {
-                bDiv.classList.remove('hidden'); sDiv.classList.add('hidden');
-                bBtn.className = "flex-1 py-2 text-sm rounded-md bg-white shadow text-indigo-600 font-bold";
-                sBtn.className = "flex-1 py-2 text-sm rounded-md text-slate-500";
-            }
-        }
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+            setAddSuccessMsg('資料庫已成功匯出 (含備註)！請妥善保存 .json 檔案。');
+            setTimeout(() => setAddSuccessMsg(''), 3000);
+          };
 
-        function showAlert(msg, isSuccess) {
-            const box = document.getElementById('alert-box');
-            box.innerText = msg;
-            box.className = `mb-4 p-3 rounded-lg text-sm font-medium ${isSuccess ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-600 border border-red-200'}`;
-            box.classList.remove('hidden');
-            setTimeout(() => { box.classList.add('hidden'); }, 3000);
-        }
-
-        // ================= 備份還原功能 =================
-        
-        function exportData() {
-            const dataStr = JSON.stringify({ options: optionsData, notes: notesData }, null, 2);
-            const blob = new Blob([dataStr], {type: "application/json"});
-            const url  = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `pn_generator_mobile_backup_${new Date().toISOString().slice(0,10)}.json`;
-            link.click();
-            showAlert('資料庫已成功匯出！', true);
-        }
-
-        function importData(event) {
+          const handleImportBackup = (event) => {
+            const fileReader = new FileReader();
             const file = event.target.files[0];
             if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = JSON.parse(e.target.result);
-                    if(data.options) {
-                        optionsData = data.options;
-                        notesData = data.notes || {};
-                        saveToStorage();
-                        initSelections();
-                        renderGeneratorFields();
-                        loadDbField();
-                        showAlert('資料庫還原成功！', true);
-                    } else {
-                        showAlert('檔案格式不正確', false);
-                    }
-                } catch(err) {
-                    showAlert('無法讀取檔案', false);
+
+            fileReader.readAsText(file, "UTF-8");
+            fileReader.onload = e => {
+              try {
+                const importedData = JSON.parse(e.target.result);
+                
+                let newOptions = {};
+                let newNotes = {};
+
+                if (importedData.options) {
+                    newOptions = importedData.options;
+                    newNotes = importedData.notes || {};
+                } else {
+                    newOptions = importedData;
                 }
+
+                if (newOptions && typeof newOptions === 'object') {
+                    saveToLocal(newOptions);
+                    saveNotesToLocal(newNotes);
+                    setAddSuccessMsg('資料庫還原成功！所有選項與備註已更新。');
+                    setTimeout(() => setAddSuccessMsg(''), 3000);
+                } else {
+                    setAddError('匯入失敗：檔案格式不正確');
+                }
+              } catch (err) {
+                setAddError('匯入失敗：無法讀取檔案');
+              }
             };
-            reader.readAsText(file);
             event.target.value = '';
+          };
+
+          const currentEditField = INITIAL_FIELD_CONFIG.find(f => f.id === editingFieldId);
+
+          return (
+            <div className="min-h-screen bg-slate-50 text-slate-800 p-4 md:p-8 font-sans">
+              <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+                {/* Header */}
+                <div className="bg-indigo-600 p-6 text-white flex flex-col md:flex-row justify-between items-center gap-4">
+                  <div>
+                    <h1 className="text-2xl font-bold flex items-center gap-2">
+                      <Database size={24} />
+                      16碼編碼生成器 Pro
+                    </h1>
+                    <p className="text-indigo-200 text-sm mt-1">自建資料庫與規則組裝系統 v3.5 (即時防呆顯示版)</p>
+                  </div>
+                  <div className="flex gap-2">
+                     <button 
+                      onClick={() => setActiveTab('generator')}
+                      className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${activeTab === 'generator' ? 'bg-white text-indigo-600 shadow-lg' : 'bg-indigo-700 text-indigo-100 hover:bg-indigo-500'}`}
+                    >
+                      <PenTool size={18} />
+                      生成代碼
+                    </button>
+                    <button 
+                      onClick={() => setActiveTab('database')}
+                      className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 ${activeTab === 'database' ? 'bg-white text-indigo-600 shadow-lg' : 'bg-indigo-700 text-indigo-100 hover:bg-indigo-500'}`}
+                    >
+                      <Settings size={18} />
+                      設定選項
+                    </button>
+                  </div>
+                </div>
+
+                {/* Main Content */}
+                <div className="p-6">
+                  {/* TAB 1: 生成器 */}
+                  {activeTab === 'generator' && (
+                    <div className="space-y-8 animate-fade-in">
+                      <div className="bg-slate-100 p-6 rounded-xl border-2 border-slate-200 text-center sticky top-0 z-10 shadow-sm">
+                        <div className="text-sm text-slate-500 mb-2 font-medium">目前的 16 碼組合結果</div>
+                        <div className="text-3xl md:text-5xl font-mono font-bold tracking-widest text-indigo-600 break-all min-h-[60px] flex items-center justify-center bg-white rounded-lg border border-slate-300 py-4 shadow-inner">
+                          {generatedCode || '________________'}
+                        </div>
+                        <div className="flex justify-center gap-4 mt-4">
+                          <button onClick={copyToClipboard} className="flex items-center gap-2 px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors shadow-md active:transform active:scale-95">
+                            {copySuccess ? <CheckCircle size={18} /> : <Copy size={18} />}
+                            {copySuccess ? '已複製！' : '複製代碼'}
+                          </button>
+                          <button onClick={clearAll} className="flex items-center gap-2 px-6 py-2 bg-white border border-slate-300 text-slate-600 rounded-full hover:bg-slate-50 transition-colors">
+                            <RefreshCw size={18} />
+                            清除重填
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {INITIAL_FIELD_CONFIG.map((field) => (
+                          <div key={field.id} className="bg-white p-3 rounded-lg border border-slate-200 hover:border-indigo-300 transition-colors shadow-sm flex flex-col">
+                            <div className="flex justify-between items-center mb-2">
+                              <label className="font-bold text-slate-700 flex items-center gap-2 text-sm">
+                                <span className="bg-indigo-100 text-indigo-700 w-5 h-5 rounded-full flex items-center justify-center text-xs shrink-0">{field.id}</span>
+                                <span className="truncate" title={field.label}>{field.label}</span>
+                              </label>
+                              <span className="text-xs px-2 py-0.5 bg-slate-100 rounded text-slate-500 whitespace-nowrap">{field.description}</span>
+                            </div>
+                            
+                            {/* 備註顯示區 (生成頁面) */}
+                            {fieldNotes[field.id] && (
+                                <div className="mb-2 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800 flex items-start gap-1.5 leading-relaxed">
+                                    <Info size={14} className="shrink-0 mt-0.5" />
+                                    <span>{fieldNotes[field.id]}</span>
+                                </div>
+                            )}
+
+                            <div className="relative mt-auto">
+                              {field.inputType === 'select' ? (
+                                <select
+                                  value={selections[field.id]}
+                                  onChange={(e) => handleSelectionChange(field.id, e.target.value)}
+                                  className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none text-sm"
+                                >
+                                  <option value="">請選擇...</option>
+                                  {(fieldOptions[field.id] || []).map((opt, idx) => (
+                                    <option key={idx} value={opt.value}>{opt.label}</option>
+                                  ))}
+                                </select>
+                              ) : (
+                                <input
+                                  type="text"
+                                  maxLength={field.length}
+                                  placeholder={`輸入 ${field.length} 碼`}
+                                  value={selections[field.id]}
+                                  onChange={(e) => handleSelectionChange(field.id, e.target.value.replace(/[^a-zA-Z0-9]/g, '').toUpperCase())}
+                                  className="w-full p-2 bg-slate-50 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none font-mono text-sm"
+                                />
+                              )}
+                              <div className="flex justify-between items-center mt-1">
+                                <span className="text-xs text-indigo-500 cursor-pointer hover:underline" onClick={() => { setEditingFieldId(field.id); setActiveTab('database'); }}>
+                                  {field.inputType === 'select' ? '+ 設定選項與備註' : '修改備註說明'}
+                                </span>
+                                <div className={`text-xs ${(selections[field.id]?.length || 0) === field.length ? 'text-green-600' : ((selections[field.id]?.length || 0) > 0 ? 'text-amber-500' : 'text-slate-400')}`}>
+                                  {selections[field.id]?.length || 0}/{field.length}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* TAB 2: 資料庫編輯器 */}
+                  {activeTab === 'database' && (
+                    <div className="animate-fade-in">
+                      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3">
+                          <AlertCircle className="text-blue-600 shrink-0 mt-1" size={20} />
+                          <div className="text-sm text-blue-800">
+                            <p className="font-bold mb-1">操作說明：</p>
+                            <ul className="list-disc list-inside space-y-1">
+                              <li>所有欄位（無論是選單或輸入）皆可設定「備註」，輔助同事填寫。</li>
+                              <li>下拉選單欄位可進一步擴充或匯入選項代碼。</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div className="p-4 bg-slate-100 border border-slate-200 rounded-lg flex flex-col justify-center">
+                           <p className="text-sm font-bold text-slate-700 mb-2 flex items-center gap-2">
+                             <Save size={16} /> 資料庫備份與還原
+                           </p>
+                           <div className="flex gap-2">
+                             <button onClick={handleExportBackup} className="flex-1 bg-white border border-slate-300 text-slate-700 py-1.5 px-3 rounded text-sm hover:bg-slate-50 flex items-center justify-center gap-2 shadow-sm">
+                               <Download size={14} /> 匯出備份
+                             </button>
+                             <button onClick={() => fileInputRef.current.click()} className="flex-1 bg-white border border-slate-300 text-slate-700 py-1.5 px-3 rounded text-sm hover:bg-slate-50 flex items-center justify-center gap-2 shadow-sm">
+                               <Upload size={14} /> 匯入還原
+                             </button>
+                             <input type="file" ref={fileInputRef} onChange={handleImportBackup} accept=".json" />
+                           </div>
+                           <p className="text-xs text-slate-400 mt-2 text-center">* 備份檔案包含選項與備註</p>
+                        </div>
+                      </div>
+
+                      {(addSuccessMsg || addError) && (
+                        <div className={`mb-4 p-3 rounded-lg flex items-center gap-2 ${addError ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-700 border border-green-200'}`}>
+                          {addError ? <AlertCircle size={18}/> : <CheckCircle size={18}/>}
+                          <span className="text-sm font-medium">{addError || addSuccessMsg}</span>
+                        </div>
+                      )}
+
+                      <div className="flex flex-col md:flex-row gap-6">
+                        <div className={`w-full ${currentEditField?.inputType === 'input' ? 'md:w-full' : 'md:w-1/3'} space-y-4`}>
+                          <div className="bg-white border border-slate-200 p-4 rounded-xl shadow-sm">
+                            <div className="mb-4">
+                              <label className="block text-sm font-medium text-slate-600 mb-1">1. 選擇目標欄位</label>
+                              <select value={editingFieldId} onChange={(e) => { setEditingFieldId(Number(e.target.value)); setAddError(''); setAddSuccessMsg(''); }} className="w-full p-2 border border-slate-300 rounded-md bg-slate-50 font-bold text-indigo-600">
+                                {INITIAL_FIELD_CONFIG.map(f => (
+                                  <option key={f.id} value={f.id}>{f.id}. {f.label} ({f.length}碼) - {f.inputType === 'select' ? '選單' : '手動輸入'}</option>
+                                ))}
+                              </select>
+                            </div>
+
+                            {/* 備註編輯區 (所有欄位皆可使用) */}
+                            <div className="mb-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                <label className="block text-sm font-bold text-yellow-800 mb-1 flex items-center gap-1">
+                                    <PenTool size={12}/> 填寫說明 (備註)
+                                </label>
+                                <textarea
+                                    value={fieldNotes[editingFieldId] || ''}
+                                    onChange={(e) => handleNoteChange(e.target.value)}
+                                    className="w-full p-2 border border-yellow-300 rounded text-sm mb-1 focus:ring-2 focus:ring-yellow-400 outline-none"
+                                    placeholder="在此輸入此欄位的填寫規則或備註... (打字即自動儲存)"
+                                    rows={2}
+                                />
+                                <div className="text-right text-[10px] text-yellow-600">輸入後自動儲存</div>
+                            </div>
+
+                            {currentEditField?.inputType === 'input' ? (
+                                <div className="p-4 bg-slate-50 text-slate-500 rounded-lg text-sm text-center border border-slate-200 mt-4">
+                                    <svg className="w-8 h-8 mx-auto mb-2 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                    此為自由輸入欄位，無需設定下拉選項。<br/>您可於上方編輯「填寫說明(備註)」即可。
+                                </div>
+                            ) : (
+                                <>
+                                  <div className="flex bg-slate-100 p-1 rounded-lg mb-4 mt-2">
+                                    <button onClick={() => setAddMode('single')} className={`flex-1 py-1 text-sm rounded-md transition-all ${addMode === 'single' ? 'bg-white shadow text-indigo-600 font-bold' : 'text-slate-500'}`}>單筆輸入</button>
+                                    <button onClick={() => setAddMode('batch')} className={`flex-1 py-1 text-sm rounded-md transition-all ${addMode === 'batch' ? 'bg-white shadow text-indigo-600 font-bold' : 'text-slate-500'}`}>Excel 匯入</button>
+                                  </div>
+
+                                  {addMode === 'single' && (
+                                    <div className="space-y-3 animate-fade-in">
+                                      <div>
+                                        <label className="block text-sm font-medium text-slate-600 mb-1">代碼值 (需 {currentEditField?.length} 碼)</label>
+                                        <input type="text" value={newOptionValue} onChange={(e) => setNewOptionValue(e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))} maxLength={currentEditField?.length} placeholder={currentEditField?.placeholder} className="w-full p-2 border border-slate-300 rounded-md font-mono" />
+                                      </div>
+                                      <div>
+                                        <label className="block text-sm font-medium text-slate-600 mb-1">選項說明</label>
+                                        <input type="text" value={newOptionLabel} onChange={(e) => setNewOptionLabel(e.target.value)} placeholder="說明文字..." className="w-full p-2 border border-slate-300 rounded-md" />
+                                      </div>
+                                      <button onClick={addOption} className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition flex justify-center items-center gap-2 mt-2"><Plus size={18} /> 新增選項</button>
+                                    </div>
+                                  )}
+
+                                  {addMode === 'batch' && (
+                                    <div className="space-y-3 animate-fade-in">
+                                      <div>
+                                        <label className="block text-sm font-medium text-slate-600 mb-1 flex justify-between">
+                                          <span>貼上 Excel 資料</span>
+                                          <button onClick={downloadTemplate} className="text-xs text-indigo-500 hover:underline flex items-center gap-1"><Download size={10} /> 下載範例 CSV</button>
+                                        </label>
+                                        <textarea value={batchText} onChange={(e) => setBatchText(e.target.value)} rows={6} placeholder={`A\t範例選項1\nB\t範例選項2`} className="w-full p-2 border border-slate-300 rounded-md font-mono text-sm leading-relaxed" />
+                                      </div>
+                                      <button onClick={handleBatchImport} className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition flex justify-center items-center gap-2 mt-2"><FileSpreadsheet size={18} /> 開始解析匯入</button>
+                                    </div>
+                                  )}
+                                </>
+                            )}
+                          </div>
+                        </div>
+
+                        {currentEditField?.inputType === 'select' && (
+                          <div className="w-full md:w-2/3">
+                             <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden h-full flex flex-col">
+                                <div className="p-4 bg-slate-50 border-b border-slate-200 font-bold text-slate-700 flex justify-between items-center shrink-0">
+                                  <span>{currentEditField?.label}</span>
+                                  <span className="text-xs font-normal text-slate-500 bg-white px-2 py-1 rounded border">{fieldOptions[editingFieldId]?.length || 0} 筆</span>
+                                </div>
+                                <div className="flex-1 overflow-y-auto p-2 min-h-[300px]">
+                                  {(!fieldOptions[editingFieldId] || fieldOptions[editingFieldId].length === 0) ? (
+                                    <div className="flex flex-col items-center justify-center h-full text-slate-400 gap-2">
+                                      <Database size={40} className="text-slate-200"/>
+                                      <p>此欄位尚未建立資料。</p>
+                                    </div>
+                                  ) : (
+                                    <ul className="space-y-2">
+                                      {fieldOptions[editingFieldId].map((opt, idx) => (
+                                        <li key={idx} className="flex items-center justify-between p-3 bg-white border border-slate-100 rounded-lg hover:shadow-sm group">
+                                          <div className="flex items-center gap-3">
+                                            <span className="font-mono bg-indigo-50 text-indigo-700 px-2 py-1 rounded font-bold border border-indigo-100 min-w-[40px] text-center">{opt.value}</span>
+                                            <span className="text-slate-700">{opt.label.split(' - ')[1] || opt.label}</span>
+                                          </div>
+                                          <button onClick={() => removeOption(editingFieldId, idx)} className="text-slate-300 hover:text-red-500 transition-colors p-2 opacity-0 group-hover:opacity-100" title="刪除"><Trash2 size={16} /></button>
+                                        </li>
+                                      ))}
+                                    </ul>
+                                  )}
+                                </div>
+                             </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+                
+                {/* Footer */}
+                <div className="bg-slate-50 p-4 text-center text-slate-400 text-xs border-t border-slate-200">
+                  系統會自動保存您的資料庫設定於此瀏覽器中 (v3.5 即時防呆版)
+                </div>
+              </div>
+            </div>
+          );
         }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
-
-
-</body></html>
+</body>
+</html>
